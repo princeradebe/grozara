@@ -1,12 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Montserrat', sans-serif;
 }
 .container {
-    min-width: 1005px;
-    margin: 0 auto;
-    padding: 2em 1em;
+    max-width: 1080px;
+    margin: 2em auto;
+    padding: 0.5em auto;
 }
 header {
     text-align: center;
@@ -41,26 +48,66 @@ nav ul li a {
     text-align: center;
 }
 .hero h1 {
-    font-size: 2.5em;
-    font-weight: 600;
+    font-size: 2em;
+    font-weight: 900;
+}
+.hero h2 {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: #A7A7A7;
 }
 .hero p {
-    font-size: 1.2em;
-    font-weight: 600;
+    font-size: 1em;
+    font-weight: 400;
     max-width: 500px;
-    margin: 3em auto;
+    margin: 2em auto;
+    color: #A7A7A7;
 }
-.hero p::before {
+.hero h1::before {
     content: "";
     display: block;
-    width: 150px;
+    width: 200px;
     border: 2px solid #17B806;
-    margin: 1em auto;
+    margin: 0.5em auto;
 }
-.hero p::after {
+.hero h1::after {
     content: "";
     display: block;
-    width: 150px;
+    width: 200px;
     border: 2px solid #17B806;
-    margin: 1em auto;
+    margin: 0.5em auto;
+}
+.appButtons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+.app-btn {
+    width: 45%;
+    max-width: 160px;
+    color: #fff;
+    margin: 20px 10px;
+    text-align: left;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: "Lucida Grande", sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+.app-btn.blu {
+    background-color: #101010;
+    transition: background-color 0.25s linear;
+}
+.app-btn.blu:hover {
+    background-color: #454545;
+}
+.app-btn i {
+    width: 20%;
+    text-align: center;
+    font-size: 28px;
+    margin-right: 7px;
+}
+.app-btn .big-txt {
+    font-size: 17px;
+    text-transform: capitalize;
 }
