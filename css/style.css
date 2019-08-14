@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+.container {
+    min-width: 1005px;
+    margin: 0 auto;
+    padding: 2em 1em;
+}
+header {
+    text-align: center;
+}
+#grozara-logo {
+    width: 200px;
+}
+nav {
+    margin: 2em auto;
+    max-width: 680px;
+}
+nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+nav ul li {
+    list-style: none;
+}
+nav ul li a {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: black;
+    text-decoration: none;
+}
+.main {
+    display: flex;
+    flex-flow: column;
+}
+.hero {
+    text-align: center;
+}
+.hero h1 {
+    font-size: 2.5em;
+    font-weight: 600;
+}
+.hero p {
+    font-size: 1.2em;
+    font-weight: 600;
+    max-width: 500px;
+    margin: 3em auto;
+}
+.hero p::before {
+    content: "";
+    display: block;
+    width: 150px;
+    border: 2px solid #17B806;
+    margin: 1em auto;
+}
+.hero p::after {
+    content: "";
+    display: block;
+    width: 150px;
+    border: 2px solid #17B806;
+    margin: 1em auto;
+}
