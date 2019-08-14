@@ -22,12 +22,12 @@ header {
     width: 200px;
 }
 nav {
-    margin: 2em auto;
-    max-width: 680px;
+    margin: 1.5em auto;
+    max-width: 600px;
 }
 nav ul {
     margin: 0;
-    padding: 0;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
 }
@@ -84,7 +84,9 @@ main {
 }
 #apple-download, #android-download {
     width: 25%;
-    padding: 0.5em;
+    padding: 10px;
+    background-color: red;
+
 }
 
 figure {
