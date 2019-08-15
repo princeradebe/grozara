@@ -9,9 +9,12 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
+    max-width: 100%;
+    margin: 0 5%;
+    bottom: 0;
 }
 .container {
-    max-width: 1080px;
+    max-width: 1020px;
     margin: 2em auto;
     padding: 0.5em auto;
 }
@@ -94,4 +97,75 @@ figure {
 figure img {
     margin: 3em auto 0;
     width: 300px;
+}
+
+@media screen and (min-width: 820px) {
+    header {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: wrap;
+        align-items: center;
+    }
+    nav {
+        margin: 0;
+    }
+    nav ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+    nav ul li {
+        list-style: none;
+        padding: 0.5em 2em;  
+    }
+    nav ul li a {
+        font-size: 1.4em;
+        font-weight: 700;
+        text-decoration: none;
+    }
+    main {
+        flex-flow: row;
+    }
+    .hero {
+        text-align: left;
+    }
+    .hero h1 {
+        font-size: 4em;
+        margin-top: 5%;
+    }
+    .hero h1::before {
+        display: none;
+    }
+    .hero h1::after {
+        content: "";
+        display: block;
+        width: 200px;
+        border: 2px solid #17B806;
+        margin: 20px 0 20px 0;
+    }
+    .hero p {
+        display: none;
+    }
+    .appButtons {
+        display: flex;
+        margin-top: 20px;
+        padding: 0px;
+        align-items: left;
+        justify-content: left;
+
+    }
+    #apple-download, #android-download {
+        width: 180px;
+        padding: 0;
+        margin: 0;
+    }
+    figure img {
+        margin: 0.5em auto;
+        width: 300px;
+        -webkit-transform:rotate(10deg);
+        -moz-transform: rotate(10deg);
+        -ms-transform: rotate(10deg);
+        -o-transform: rotate(10deg);
+        transform: rotate(10deg);
+    }
 }
