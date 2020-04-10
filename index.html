@@ -12,7 +12,7 @@
     <title>Grozara</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./css/style.css"> -->
 </head>
 
 <body>
@@ -20,7 +20,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
     <!------------------------------HEADER------------------------------>
-    <header class="container">
+    <header class="container" id="home">
         <div class="logo">
             <a href="./index.html">
                 <svg id="grozara-logo" xmlns="http://www.w3.org/2000/svg" width="577.339" height="60"
@@ -59,45 +59,167 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Showcase</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="donwload"><a href="#download">Download</a></li>
             </ul>
         </nav>
     </header>
     <main class="container">
         <section class="hero">
-            <h1>
-                Live prices from <br /> South Africa's biggest <br /> retailers.
-            </h1>
-            <h2>
-                The smartest grocery <br /> shopping list app.
-            </h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit,
-                mattis at libero potenti nullam odio, elementum volutpat
-                dis arcu cubilia leo. Dapibus litora vehicula nibh sem conubia,
-                nisi placerat fames malesuada.
-            </p>
-            <!------------------------------APP BUTTONS------------------------------>
-            <div class="appButtons">
-                <img src="./images/app-store.png" alt="Apple Download Button" id="apple-download">
-                <img src="./images/google-play.png" alt="Google Play Download Button" id="android-download">
+
+            <div class="hero-container">
+                <div class="hero-containn-left">
+                    <h1>
+                        Live prices from <br /> South Africa's <span class="biggest-text>">biggest</span> <br /> retailers.
+                    </h1>
+                    <h2>
+                        The smartest grocery shopping list <br/> with live price updates and deal </br /> notifications.
+                    </h2>
+                    <!------------------------------APP BUTTONS------------------------------>
+                    <div class="appButtons">
+                        <img src="./images/app-store.png" alt="Apple Download Button" id="apple-download">
+                        <img src="./images/google-play.png" alt="Google Play Download Button" id="android-download">
+                    </div>
+                </div>
+                <div class="hero-container-right">
+                    <div class="device">
+                        <figure>
+                            <img src="./images/app.png" alt="App Screen">
+                        </figure>
+                    </div>
+                </div>
             </div>
         </section>
-        <div class="device">
-            <figure>
-                <img src="./images/app-screen.png" alt="App Screen">
-            </figure>
-        </div>
-    </main>
-    <footer>
-            <div class="logos">
-                <!-- <img src="./images/game-logo.png" alt="game" id="game">
+    <!------------------------------ABOUT------------------------------>
+        <section class="partner-about" id="#about">
+            <div class="partners">
+                <h2>Our Partners</h2>
+                <ul class="partner-list">
+                    <li class="partner-logo"><img src="/images/checkers.png" alt="Checkers"></li>
+                    <li class="partner-logo"><img src="/images/Pick-n-Pay-logo.png" alt="Pick n Pay"></li>
+                    <li class="partner-logo"><img src="/images/Makro-logo-white.png" alt="Makro"></li>
+                    <li class="partner-logo"><img src="/images/game-logo.png" alt="Game"></li>
+                    <li class="partner-logo"><img src="/images/woolworths-hover.png" alt="Woolworths"></li>
+                                    <!-- <img src="./images/game-logo.png" alt="game" id="game">
                 <img src="./images/Pick-n-Pay-logo.png" alt="picknpay" id="picknpay">
                 <img src="./images/woolworths-hover.png" alt="woolworths" id="woolworths">
                 <img src="./images/Makro-logo-white.png" alt="makro" id="makro"> -->
+                </ul>
+            </div>
+            <div class="about">
+                <h1 class="about-heading">About</h1>
+                <p class="about-paragraph">
+                    Grozara is a free, easy to use and fun grocery shopping list.
+                    Able to notify you with the latest deals and the cheapest store for your grocery list. Grozara is a
+                    free,
+                    easy to use and fun grocery shopping list.
+                    Able to notify you with the latest deals and the cheapest store for your grocery list.
+                </p>
+            </div>
+        </section>
+    <!------------------------------FEATURES------------------------------>
+        <section class="features">
+            <div class="feature">
+                <div class="app-feature">
+                    <img src="/images/app-screen-bg-grey.svg" alt="feature-app-bg">
+                    <img src="/images/app.png" alt="feature-app1">
+                </div>
+                <h2 class="app-feature-heading">Live Shopping List</h2>
+                <img src="/images/small-green-bean.svg" alt="Live Shopping List">
+                <span>1</span>
+                <p class="app-feature-paragraph">
+                    Your shopping list is always in sync with your favourite store.
+                    Change stores to see who has the best prices for the items in your list.
+                </p>
+            </div>
+            <div class="feature">
+                <h2 class="app-feature-heading">Price Wars</h2>
+                <img src="/images/small-green-bean.svg" alt="Price Wars">
+                <span>2</span>
+                <p class="app-feature-paragraph">
+                    Your shopping list is always in sync with your favourite store.
+                    Change stores to see who has the best prices for the items in your list.
+                </p>
+                <div class="app-feature">
+                    <img src="/images/app-screen-bg-grey.svg" alt="feature-app-bg">
+                    <img src="/images/app.png" alt="feature-app2">
+                </div>
+            </div>
+            <div class="feature">
+                <div class="app-feature">
+                    <img src="/images/app-screen-bg-grey.svg" alt="feature-app-bg">
+                    <img src="/images/app.png" alt="feature-app3">
+                </div>
+                <h2 class="app-feature-heading">Smart Notification</h2>
+                <img src="/images/small-green-bean.svg" alt="Smart Notification">
+                <span>3</span>
+                <p class="app-feature-paragraph">
+                    Your shopping list is always in sync with your favourite store.
+                    Change stores to see who has the best prices for the items in your list.
+                </p>
+            </div>
+        </section>
+    <!------------------------------CONTACT------------------------------>
+        <section class="contact">
+            <div class="reviews">
+                <img src="/images/rating-star.svg" alt="rating">
+                <p>
+                   <q>
+                    Grozara has saved me a lot of money with the smart notification. 
+                    I am able to get the best deals at all times.
+                   </q>
+                   <cite>
+                    Nolwazi Maila
+                   </cite> 
+                </p>
+            </div>
+            <div class="contact-form">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="fullname" placeholder="Jon Doe">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="jondoe@email.com">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Message"></textarea>
+                <input type="submit" value="Send Message">
+            </div>
+        </section>
+    <!------------------------------DOWNLOAD------------------------------>
+        <section class="download" id="download">
+            <div class="download-left">
+                <h1 class="donwload-heading">Download the app now.</h1>
+                <p>
+                    Available for iPhone®, iPad®, iPod touch®, Apple Watch®, Android™, Android Wear™,
+                    Amazon Alexa devices and Google Assistant devices.
+                </p>
+                <div class="appButtons">
+                    <img src="./images/app-store.png" alt="Apple Download Button" id="apple-download">
+                    <img src="./images/google-play.png" alt="Google Play Download Button" id="android-download">
+                </div>
+            </div>
+            <div class="download-right">
+                <img src="/images/app.png" alt="app store">
+            </div>
+
+        </section>
+    </main>
+    <!------------------------------FOOTER------------------------------>
+    <footer>
+            <div class="footer-left">
+                <img src="" alt="logo">
+                <p class="footer-paragraph">
+                    The smartest grocery shopping list 
+                    with live price updates and deal 
+                    notifications
+                </p>
+                <ul class="social-icons">
+                    <li class="social-icon"><img src="/images/Icon awesome-facebook-f.svg" alt="facebook"></li>
+                    <li class="social-icon"><img src="/images/Icon awesome-instagram.svg" alt="instagram"></li>
+                    <li class="social-icon"><img src="/images/Icon awesome-twitter.svg" alt="twitter"></li>
+                    <li class="social-icon"><img src="/images/Icon awesome-linkedin-in.svg" alt="linkedin"></li>
+                </ul>
             </div>
     </footer>
     <script src="" async defer></script>
