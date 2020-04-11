@@ -35,11 +35,16 @@ body {
     font-size: 18px;
     border: none;
     outline: none;
-    background-color: red;
+    background-color: var(--primary);
     color: white;
     cursor: pointer;
     padding: 15px;
-    border-radius: 4px;
+    text-align: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50px;
+    box-shadow:  20px 20px 60px #d9d9d9, 
+    -20px -20px 60px #ffffff;
   }
 .logo-logo {
     width: 12rem;
@@ -64,6 +69,7 @@ nav ul {
     padding: .4rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 nav ul li {
     list-style: none;
@@ -77,6 +83,9 @@ nav ul li a {
 .btn-download {
     background-color: var(--primary);
     border-radius: .2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
 }
 .btn-download a {
     padding: .2rem;
@@ -90,9 +99,10 @@ main {
     text-align: center;
 }
 .hero h1 {
+    color: black;
     padding: .1rem;
     font-size: 1.9rem;
-    font-weight: 700;
+    font-weight: 900;
 }
 .hero h2 {
     font-size: 1.1rem;
@@ -162,12 +172,18 @@ main {
 .partner-logo {
     width: 6rem;
 }
+.partner-logo-woolworths, .partner-logo-game {
+    display: none;
+}
 figure {
     text-align: center;
 }
 figure img {
     margin: 3rem auto 0;
     width: 20rem;
+}
+.app-screen-bg {
+    display: none;
 }
 section  {
     margin-bottom: 3rem;
@@ -284,7 +300,8 @@ section h1::after {
     padding: 1rem 1rem ;
     font-size: 1.2rem;
     color: var(--primaryText);
-    background-color: var(--primary);
+    /* background-color: var(--primary); */
+    background-color: #0DD773;
 }
 .contact-form label {
     margin-bottom: .2rem;
@@ -426,44 +443,81 @@ footer ul li {
 .copyright a {
     color: var(--textColor);
 }
-/* 
+
+/* Small devices*/
 @media screen and (min-width: 900px) {
+    .container {
+        max-width: 60rem;
+        margin: 2rem auto;
+        padding: 0.5rem auto;
+    }
     header {
         display: flex;
         justify-content: space-between;
-        flex-flow: wrap;
-        align-itrems: center;
-    }
-    .container {
-        margin: 1rem;
-        padding: 0.5rem auto;
+        /* flex-flow: wrap; */
+        align-items: center;
     }
     nav {
         margin: 0;
+        width: 60rem;
     }
     nav ul {
         margin: 0;
         padding: 0;
         display: flex;
+        justify-content: space-evenly;
     }
     nav ul li {
         list-style: none;
-        padding: 0.5rem 2rem;  
+        /* padding: 0.5rem 2rem;   */
     }
     nav ul li a {
         font-size: 1.4rem;
         font-weight: 600;
         text-decoration: none;
     }
-    main {
-        flex-flow: row;
+    .hero-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
     }
-    .hero {
-        text-align: left;
+    .hero-container-right {
+        position: absolute;
+        right: 5rem;
+        top: 0;
+    }
+    .hero-container-left {
+        width: 50rem;
+    }
+    .device {
+        position: relative;
+    }
+    .app-screen-bg {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: -12rem;
+        z-index: -100;
+        width: 40rem;
+    }
+    figure img {
+        margin: 0.5rem auto;
+        width: 15rem;
+        -webkit-transform:rotate(10deg);
+        -moz-transform: rotate(10deg);
+        -ms-transform: rotate(10deg);
+        -o-transform: rotate(10deg);
+        transform: rotate(10deg);
     }
     .hero h1 {
-        font-size: 4rem;
+        font-size: 3.5rem;
+        font-weight: 900;
+        text-align: left;
         margin-top: 5%;
+    }
+    .hero h2 {
+        font-size: 1.6rem;
     }
     .hero h1::before {
         display: none;
@@ -471,18 +525,19 @@ footer ul li {
     .hero h1::after {
         content: "";
         display: block;
-        width: 200px;
-        border: 2px solid var(--primary);
+        width: 10rem;
+        border: .2rem solid var(--primary);
         margin: 20px 0 20px 0;
     }
-    .hero p {
-        display: none;
+    .hero {
+        text-align: left;
+        margin-bottom: 10rem;
     }
     .appButtons {
         display: flex;
         margin-top: 20px;
         padding: 0px;
-        align-itrems: left;
+        align-items: left;
         justify-content: left;
     }
     #apple-download, #android-download {
@@ -490,17 +545,199 @@ footer ul li {
         height: 42px;
         padding: 1px;
     }
-    figure img {
+    .partners {
+        padding: .3rem;
+        width: 50rem;
+        height: 6rem;
+        border-radius: .5rem;
+        background-color: var(--primary);
+        text-align: center;
+        color: var(--primaryText);
+    }
+    .partner-logo {
+        width: 9rem;
+    }
+    .partner-list {
+        margin-top: -1.4rem;
+    }
+    .partner-logo-woolworths, .partner-logo-game {
+        display: block;
+    }
+    section  {
+        margin-bottom: 5rem;
+    }
+    section h1 {
+        font-size: 3rem;
+    }
+    .about-paragraph {
+        font-size: 2rem;
+        line-height: 2rem;
+        width: 50rem;
+        margin: auto;
+    }
+
+    /*--FEATURE--*/
+
+    .feature {
+        display: flex;
+        flex-direction: row;
+    }
+    .feature-middle {
+        flex-direction: row-reverse;
+    }
+    .features h2 {
+        font-size: 1.6rem;
+    }
+    .app-feature {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        width: 20rem;
+        margin: auto;
+    }
+    .app-image-bg {
+        display: block;
+        position: absolute;
+        top: 8rem;
+        left: -6rem;
+        width: 30rem;
+    }
+    .app-image {
+        height: 30rem;
+        margin-bottom: 2rem;
+    }
+    .app-feature-paragraph {
+        width: 20rem;
+        line-height: 1.8rem;
+        margin: 0;
+    }
+    .feature-num {
+        position: absolute;
+        top: -1.4rem;
+        left: -4rem;
+        width: 4rem;
+        height: 4rem;
+    }
+    .feature-num img {
+        width: 8rem;
+    }
+    .feature-num span {
+        font-size: 3.5rem;
+        position: absolute;
+        top: 1.4rem;
+        left: 3.7rem;
+    }
+    .feature-text {
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow:  20px 20px 60px #d9d9d9, 
+                    -20px -20px 60px #ffffff;
+        width: 25rem;
+        /* margin: auto    ; */
+    }
+    .app-feature-heading {
+        margin-bottom: 1rem;
+    }
+
+    /*--CONTACT--*/
+    .contact-section {
+        width: 50rem;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .reviews {
+        position: relative;
+        margin-left: 5rem;
+    }
+    .reviews::before {
+        content: "";
+        position: absolute;
+        left: -4rem;
+        top: -3rem;
+        height: 15rem;
+        width: .4rem;
+        border-radius: 1rem;
+        background-color: #11CA44;
+        border: .1rem solid #11CA44;
+    }
+
+    /*--DOWNLOAD--*/
+    .contact-section, .contact {
+        margin-bottom: 2rem;
+    }
+    .download {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+    }
+    .download-right {
+        display: block;
+        position: absolute;
+        top: -7rem;
+        left: -27rem;
+        /* z-index: ; */
+    }
+    .download-right-bg {
+        /* display: block; */
+        width: 55rem;
+    }
+    .download-right-app {
+        position: absolute;
+        left: 35rem;
+        top: 8.7rem;
+        object-fit: cover;
+        object-position: 100% 0;
+      
+        width: 13rem;
+        height: 13rem;
+    }
+    .download-left {
+        margin-left: -20rem;
+        z-index: 100;
+    }
+    .download-left p {
+        text-align: left;
+        line-height: 1.2rem;
+    }
+    .donwload-heading {
+        text-align: left;
+        font-size: 1.8rem;
+        line-height: 1.5rem;
+    }
+    .donwload-heading {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+    .donwload-heading::after {
+        content: "";
+        display: block;
+        width: 2rem;
+        position: absolute;
+        left: 0;
+        border: .2rem solid var(--primary);
+        background-color: var(--primary);
+        border-radius: 1rem;
         margin: 0.5rem auto;
-        width: 300px;
-        -webkit-transform:rotate(10deg);
-        -moz-transform: rotate(10deg);
-        -ms-transform: rotate(10deg);
-        -o-transform: rotate(10deg);
-        transform: rotate(10deg);
+    }
+    /*--FOOTER--*/
+    footer {
+        padding-top: 12rem;
+        margin-top: -10rem;
+    }
+    .footer-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+    .footer-right {
+        text-align: right;
     }
 }
-
+/*
 @media screen and (min-width: 1200px) {
     .container {
         max-width: 1200px;

@@ -19,7 +19,8 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">
+    </button>
     <!------------------------------HEADER------------------------------>
     <header class="container" id="home">
         <div class="logo">
@@ -74,9 +75,9 @@
         <section class="hero">
 
             <div class="hero-container">
-                <div class="hero-containn-left">
+                <div class="hero-container-left">
                     <h1>
-                        Live prices from <br /> South Africa's <span style="color:#11CA44;">biggest</span> <br /> retailers.
+                        Live prices <br /> from  South Africa's <br /> <span style="color:#17B806;">biggest</span> retailers.
                     </h1>
                     <h2>
                         The smartest grocery shopping list <br/> with live price updates and deal </br /> notifications.
@@ -91,6 +92,7 @@
                     <div class="device">
                         <figure>
                             <img src="./images/app.png" alt="App Screen">
+                            <img class="app-screen-bg" src="./images/app-screen-bg.svg" alt="App Screen">
                         </figure>
                     </div>
                 </div>
@@ -102,11 +104,11 @@
                 <div class="partners">
                     <h2>Our Partners</h2>
                     <ul class="partner-list">
-                        <li><img class="partner-logo" src="/images/checkers.png" alt="Checkers"></li>
-                        <li><img class="partner-logo" src="/images/Makro-logo-white.png" alt="Makro"></li>
-                        <li><img class="partner-logo" src="/images/Pick-n-Pay-logo.png" alt="Pick n Pay"></li>
-                        <!-- <li><img class="partner-logo" src="/images/game-logo.png" alt="Game"></li> -->
-                        <!-- <li><img class="partner-logo" src="/images/woolworths-hover.png" alt="Woolworths"></li> -->
+                        <li><img class="partner-logo partner-logo-checkers" src="/images/checkers.png" alt="Checkers"></li>
+                        <li><img class="partner-logo partner-logo-makro" src="/images/Makro-logo-white.png" alt="Makro"></li>
+                        <li><img class="partner-logo partner-logo-picknay" src="/images/Pick-n-Pay-logo.png" alt="Pick n Pay"></li>
+                        <li><img class="partner-logo partner-logo-game" src="/images/game-logo.png" alt="Game"></li>
+                        <li><img class="partner-logo partner-logo-woolworths" src="/images/woolworths-hover.png" alt="Woolworths"></li>
                     </ul>
                 </div>
             </div>
@@ -143,7 +145,7 @@
                     </div>
                 </div>
             </div>
-            <div class="feature">
+            <div class="feature feature-middle">
                     <div class="app-feature">
                         <img class="app-image-bg" src="/images/app-screen-bg-grey.svg" alt="feature-app-bg">
                         <img class="app-image" src="/images/app.png" alt="feature-app2">
@@ -185,35 +187,36 @@
     <!------------------------------CONTACT------------------------------>
         <section class="contact" id="contact">
             <h1 class="contact-heading">Contact</h1>
-            <div class="contact-form">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="fullname" placeholder="Jon Doe">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="jondoe@email.com">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Type your message here..."></textarea>
-                <input class="submit" type="submit" value="Send Message">
-            </div>
-            <div class="reviews">
-                <img src="/images/rating-star.svg" alt="rating">
-                <p>
-                   <q>
-                    Grozara has saved me a lot of money with the smart notification. 
-                    I am able to get the best deals at all times.
-                   </q>
-                   <cite>
-                      Nolwazi Maila
-                   </cite> 
-                </p>
+            <div class="contact-section container">
+                <div class="contact-form">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="fullname" placeholder="Jon Doe">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="jondoe@email.com">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Type your message here..."></textarea>
+                    <input class="submit" type="submit" value="Send Message">
+                </div>
+                <div class="reviews">
+                    <img src="/images/rating-star.svg" alt="rating">
+                    <p>
+                       <q>
+                        Grozara has saved me a lot of money with the smart notification. 
+                        I am able to get the best deals at all times.
+                       </q>
+                       <cite>
+                          Nolwazi Maila
+                       </cite> 
+                    </p>
+                </div>
             </div>
         </section>
     <!------------------------------DOWNLOAD------------------------------>
-        <section class="download" id="download">
+        <section class="download container" id="download">
             <div class="download-left">
                 <h1 class="donwload-heading">Download the app now.</h1>
                 <p>
-                    Available for iPhone®, iPad®, iPod touch®, Apple Watch®, Android™, Android Wear™,
-                    Amazon Alexa devices and Google Assistant devices.
+                    Available for iPhone®, iPad®, iPod touch®, Apple Watch®, Android™, Android Wear™, Amazon Alexa devices and Google Assistant devices.
                 </p>
                 <div class="appButtons">
                     <img src="./images/app-store.png" alt="Apple Download Button" id="apple-download">
@@ -221,30 +224,43 @@
                 </div>
             </div>
             <div class="download-right">
-                <img src="/images/app.png" alt="app store">
+                <img class="download-right-bg" src="/images/download-card.svg" alt="app store">
+                <img class="download-right-app" src="/images/app.png" alt="app store">
             </div>
 
         </section>
     </main>
     <!------------------------------FOOTER------------------------------>
-    <footer>
-            <div class="footer-left">
-                <img class="footer-logo" src="/images/Grozara.svg" alt="logo">
-                <p class="footer-paragraph">
-                    The smartest grocery shopping list 
-                    with live price updates and deal 
-                    notifications
+    <footer >
+            <div class="footer-content container">
+                <div class="footer-wrapper">
+                    <div class="footer-left">
+                        <img class="footer-logo" src="/images/Grozara.svg" alt="logo">
+                        <p class="footer-paragraph">
+                            The smartest grocery shopping list 
+                            with live price updates and deal 
+                            notifications
+                        </p>
+                        <ul class="social-icons">
+                            <li><img class="social-icon social-icon-facebook" src="/images/Icon awesome-facebook-f.svg" alt="facebook"></li>
+                            <li><img class="social-icon" src="/images/Icon awesome-instagram.svg" alt="instagram"></li>
+                            <li><img class="social-icon" src="/images/Icon awesome-twitter.svg" alt="twitter"></li>
+                            <li><img class="social-icon" src="/images/Icon awesome-linkedin-in.svg" alt="linkedin"></li>
+                        </ul>
+                    </div>
+                    <div class="footer-right">
+                        <p class="footer-paragraph">
+                            114 Summerplace <br/>
+                            Summerfields Estate  <br/>
+                            Centurion <br/>
+                            0157 <br/>
+                        </p>
+                    </div>
+                </div>
+                <p class="copyright">
+                    <a href="www.princeradebe.co.za">© 2020 princeradebe.co.za</a>
                 </p>
-                <ul class="social-icons">
-                    <li><img class="social-icon social-icon-facebook" src="/images/Icon awesome-facebook-f.svg" alt="facebook"></li>
-                    <li><img class="social-icon" src="/images/Icon awesome-instagram.svg" alt="instagram"></li>
-                    <li><img class="social-icon" src="/images/Icon awesome-twitter.svg" alt="twitter"></li>
-                    <li><img class="social-icon" src="/images/Icon awesome-linkedin-in.svg" alt="linkedin"></li>
-                </ul>
             </div>
-            <p class="copyright">
-                <a href="www.princeradebe.co.za">© 2020 princeradebe.co.za</a>
-            </p>
     </footer>
     <script src="/js/index.js" async defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
