@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1540.639" height="702.771" viewBox="0 0 1540.639 702.771">
+  <defs>
+    <filter id="download-card" x="0" y="0" width="1540.639" height="702.771" filterUnits="userSpaceOnUse">
+      <feOffset dx="12" dy="11" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="28" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#download-card)">
+    <path id="download-card-2" data-name="download-card" d="M-1615.287,6796.878c-.128,49.013,1.252,453.223,1.252,453.223s-1.361,36.965,39.776,36.965,1295.1-.332,1295.1-.332,36.074,1.9,36.372-39.147,0-373.222,0-373.222.293-34.764-41.483-38.854c-7.937-.777-59.321-4.259-136.918-9.361-333.1-21.9-1150.112-73.744-1150.112-73.744S-1615.159,6747.866-1615.287,6796.878Z" transform="translate(1687.3 -6679.3)" fill="#fff"/>
+  </g>
+</svg>
