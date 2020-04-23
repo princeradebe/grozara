@@ -26,6 +26,9 @@ body {
     overflow-x: hidden;
     background-color: white;
 }
+a {
+    text-decoration: none;
+}
 #myBtn {
     display: none;
     position: fixed;
