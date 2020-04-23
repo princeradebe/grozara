@@ -309,7 +309,7 @@ section h1::after {
 .contact-form input, textarea {
     -webkit-appearance: none;
     font-family: inherit;
-    overflow: visible;
+    overflow: visible; 
     padding: .1rem;
     margin-bottom: 1rem;
     border-radius: .5rem;
