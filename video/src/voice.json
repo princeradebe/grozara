@@ -1,0 +1,35 @@
+{
+  "source": "elevenlabs:eleven_multilingual_v2",
+  "lines": [
+    {
+      "id": "hello",
+      "file": "vo/hello.wav",
+      "seconds": 2.506
+    },
+    {
+      "id": "list",
+      "file": "vo/list.wav",
+      "seconds": 2.756
+    },
+    {
+      "id": "snap",
+      "file": "vo/snap.wav",
+      "seconds": 6.363
+    },
+    {
+      "id": "share",
+      "file": "vo/share.wav",
+      "seconds": 4.261
+    },
+    {
+      "id": "scan",
+      "file": "vo/scan.wav",
+      "seconds": 2.669
+    },
+    {
+      "id": "outro",
+      "file": "vo/outro.wav",
+      "seconds": 5.994
+    }
+  ]
+}

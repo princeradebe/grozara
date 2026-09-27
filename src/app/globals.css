@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #183631;
+  --color-forest-deep: #0d211d;
+  --color-forest-lift: #24524a;
+  --color-lime: #7ec340;
+  --color-lime-bright: #a5e063;
+  --color-amber: #ffb902;
+  --color-paper: #f1eddf;
+  --color-label: #fffcf5;
+  --color-mist: #f7f9f5;
+  --color-coral: #ff6b5b;
+  --color-blush: #ff8fa3;
+}
+
+/* `inline` because these point at the variables next/font puts on <html>. */
+@theme inline {
+  --font-display: var(--font-nunito);
+  --font-sans: var(--font-inter);
+  --font-hand: var(--font-caveat);
+}
+
+html {
+  background: var(--color-forest-deep);
+  color-scheme: dark;
+}
+
+body {
+  color: var(--color-mist);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-lime-bright);
+  outline-offset: 3px;
+}
+
+/* The night-garden sky. Also what shows while the 3D loads or without WebGL. */
+.night-sky {
+  background:
+    radial-gradient(120% 70% at 70% 75%, #24524a 0%, transparent 70%),
+    linear-gradient(180deg, #0d211d 0%, #153530 55%, #24524a 100%);
+}
+
+/* The 2D Zara poster fades once the canvas has drawn its first frame. */
+.zara-poster {
+  transition: opacity 400ms ease;
+}
+[data-experience] .zara-poster {
+  opacity: 0;
+}
+
+/* "Grab me" hint: gone after the first grab, and never shown without physics. */
+.zara-hint {
+  transition: opacity 300ms ease;
+}
+[data-zara-grabbed] .zara-hint,
+[data-experience="static"] .zara-hint {
+  opacity: 0;
+}

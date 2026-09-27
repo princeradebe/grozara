@@ -1,0 +1,58 @@
+/* Scrapbook-only motion. Keyframes move `transform` or SVG strokes, never the individual
+   translate/rotate/scale properties Tailwind positions with, so they compose with static tilts. */
+
+/* A pen line crossing out the item being picked up, then fading so it can go again. */
+@keyframes d3-strike {
+  0%, 14% { stroke-dashoffset: 1; opacity: 1; }
+  34%, 84% { stroke-dashoffset: 0; opacity: 1; }
+  93% { stroke-dashoffset: 0; opacity: 0; }
+  94%, 100% { stroke-dashoffset: 1; opacity: 0; }
+}
+.strike {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.strikeLive {
+  stroke-dasharray: 1;
+  animation: d3-strike 5.5s ease-in-out infinite;
+}
+
+/* Marching ants around the cut-out. */
+@keyframes d3-ants {
+  to { stroke-dashoffset: -36; }
+}
+.ants {
+  animation: d3-ants 1.6s linear infinite;
+}
+
+/* Polaroids swaying on the washing line. */
+@keyframes d3-swing {
+  0%, 100% { transform: rotate(-1.6deg); }
+  50% { transform: rotate(1.6deg); }
+}
+.swing {
+  transform-origin: 50% 0;
+  animation: d3-swing 5.5s ease-in-out infinite;
+}
+
+/* Stickers wobble when you poke them. */
+@keyframes d3-wiggle {
+  0%, 100% { transform: none; }
+  30% { transform: rotate(-5deg) scale(1.05); }
+  65% { transform: rotate(4deg) scale(1.05); }
+}
+.wiggle:hover {
+  animation: d3-wiggle 0.6s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strikeLive,
+  .ants,
+  .swing,
+  .wiggle:hover {
+    animation: none;
+  }
+  .strikeLive {
+    stroke-dashoffset: 0;
+  }
+}

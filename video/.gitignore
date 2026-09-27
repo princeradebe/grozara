@@ -1,0 +1,7 @@
+node_modules
+out
+.env
+# The site's root .gitignore ignores .env*; the template is meant to be shared.
+!.env.example
+# Synced from the site's public/ by scripts/sync-site-assets.mjs.
+public/site

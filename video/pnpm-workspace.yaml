@@ -1,0 +1,3 @@
+# Its own workspace root, so installs here never touch the website's lockfile.
+packages:
+  - "."
