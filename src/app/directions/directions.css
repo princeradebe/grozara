@@ -1,0 +1,118 @@
+/* Motion for the hero directions: CSS only, no 3D, no client JavaScript. */
+
+/* Keyframes animate `transform`, never `translate`/`rotate`/`scale`: Tailwind v4 positions with those
+   individual properties, and animating them would wipe out classes like -translate-x-1/2. */
+@keyframes dir-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes dir-float-side {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1.5deg); }
+}
+@keyframes dir-rise {
+  from { opacity: 0; transform: translateY(28px); filter: blur(6px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+/* Slapped on. The resting tilt lives on the static `rotate` property (see .dir-pop), so it survives
+   reduced motion; the animation only adds the overshoot on top via `transform`. */
+@keyframes dir-pop {
+  0% { opacity: 0; transform: scale(1.6) rotate(-14deg); }
+  60% { opacity: 1; transform: scale(0.94) rotate(0deg); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes dir-marquee {
+  to { transform: translateX(-50%); }
+}
+@keyframes dir-glow {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.08); }
+}
+@keyframes dir-tick {
+  0%, 55% { background: transparent; }
+  60%, 100% { background: var(--color-forest); }
+}
+
+.dir-float { animation: dir-float 7s ease-in-out infinite; }
+.dir-float-side { animation: dir-float-side 8s ease-in-out infinite; }
+.dir-rise { animation: dir-rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.dir-pop { rotate: var(--tilt, 0deg); animation: dir-pop 0.8s cubic-bezier(0.3, 1.4, 0.4, 1) both; }
+.dir-marquee { animation: dir-marquee 38s linear infinite; }
+.dir-glow { animation: dir-glow 6s ease-in-out infinite; }
+
+.dir-delay-1 { animation-delay: 0.12s; }
+.dir-delay-2 { animation-delay: 0.24s; }
+.dir-delay-3 { animation-delay: 0.36s; }
+.dir-delay-4 { animation-delay: 0.5s; }
+.dir-delay-5 { animation-delay: 0.7s; }
+.dir-delay-6 { animation-delay: 0.9s; }
+
+.dir-paper {
+  background-color: var(--color-paper);
+  background-image: radial-gradient(rgb(24 54 49 / 0.14) 1.4px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+/* Scroll-driven reveals: the animation's clock is the element's trip through the viewport, not time.
+   Pure CSS, no JavaScript. Browsers without animation-timeline (Firefox today) just show the content.
+   Like the keyframes above these animate `transform`, so don't put one on an element that also has
+   .dir-float or .dir-pop: wrap it instead. */
+@keyframes dir-reveal {
+  from { opacity: 0; transform: translateY(56px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes dir-reveal-left {
+  from { opacity: 0; transform: translateX(-72px) rotate(-3deg); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes dir-reveal-right {
+  from { opacity: 0; transform: translateX(72px) rotate(3deg); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes dir-reveal-zoom {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes dir-drift-up {
+  from { transform: translateY(60px); }
+  to { transform: translateY(-60px); }
+}
+@keyframes dir-drift-down {
+  from { transform: translateY(-60px); }
+  to { transform: translateY(60px); }
+}
+@keyframes dir-slide-in-wordmark {
+  from { transform: translateY(35%); }
+  to { transform: translateY(0); }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .dir-reveal, .dir-reveal-left, .dir-reveal-right, .dir-reveal-zoom {
+      animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 35%;
+    }
+    .dir-reveal { animation-name: dir-reveal; }
+    .dir-reveal-left { animation-name: dir-reveal-left; }
+    .dir-reveal-right { animation-name: dir-reveal-right; }
+    .dir-reveal-zoom { animation-name: dir-reveal-zoom; }
+    /* Parallax: moves the whole time the element is on screen. */
+    .dir-drift-up, .dir-drift-down, .dir-wordmark {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+    }
+    .dir-drift-up { animation-name: dir-drift-up; animation-range: cover; }
+    .dir-drift-down { animation-name: dir-drift-down; animation-range: cover; }
+    /* The giant footer wordmark rises into place as the footer scrolls in. */
+    .dir-wordmark { animation-name: dir-slide-in-wordmark; animation-range: entry 0% entry 100%; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dir-float, .dir-float-side, .dir-rise, .dir-pop, .dir-marquee, .dir-glow {
+    animation: none;
+  }
+}
