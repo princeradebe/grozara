@@ -16,5 +16,6 @@ const log = ffmpeg(["-i", input, "-af", `loudnorm=${TARGET}:print_format=json`, 
 const m = JSON.parse(log.slice(log.lastIndexOf("{"), log.lastIndexOf("}") + 1));
 const measured = `measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}`;
 
-ffmpeg(["-i", input, "-c:v", "copy", "-af", `loudnorm=${TARGET}:${measured}:linear=true`, "-ar", "48000", "-c:a", "aac", "-b:a", "256k", output]);
+// -shortest ends on the last video frame; AAC padding would otherwise run the audio a hair past 30s.
+ffmpeg(["-i", input, "-c:v", "copy", "-af", `loudnorm=${TARGET}:${measured}:linear=true`, "-ar", "48000", "-c:a", "aac", "-b:a", "256k", "-shortest", output]);
 console.log(`${input}: ${m.input_i} LUFS → -14 LUFS in ${output}`);

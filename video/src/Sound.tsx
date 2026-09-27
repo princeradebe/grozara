@@ -43,7 +43,7 @@ const VOICE = SCENES.map((s) => [s.from + s.voiceAt, s.from + s.voiceAt + s.voic
 /** The music sits back under Zara's lines and comes up between them, fading in and out at the ends. */
 function musicVolume(frame: number) {
   const gap = Math.min(...VOICE.map(([a, b]) => (frame < a ? a - frame : frame > b ? frame - b : 0)));
-  const duck = interpolate(gap, [0, 8], [0.2, 0.45], clamp);
+  const duck = interpolate(gap, [0, 8], [0.22, 0.55], clamp);
   return duck * interpolate(frame, [0, 8, TOTAL - 24, TOTAL], [0, 1, 1, 0], clamp);
 }
 

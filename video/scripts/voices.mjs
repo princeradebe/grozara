@@ -6,7 +6,7 @@ if (!KEY) {
   process.exit(1);
 }
 
-const params = new URLSearchParams({ accent: "south african", language: "en", page_size: "30", sort: "usage_character_count_7d" });
+const params = new URLSearchParams({ accent: "south african", language: "en", page_size: "30", sort: "trending" });
 const res = await fetch(`https://api.elevenlabs.io/v1/shared-voices?${params}`, { headers: { "xi-api-key": KEY } });
 if (!res.ok) throw new Error(`${res.status} ${await res.text()}`);
 const { voices } = await res.json();

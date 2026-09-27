@@ -1,4 +1,17 @@
 {
-  "music": null,
-  "sfx": {}
+  "music": "music/bed.mp3",
+  "sfx": {
+    "whoosh": "sfx/whoosh.wav",
+    "slam": "sfx/slam.wav",
+    "drop": "sfx/drop.wav",
+    "shutter": "sfx/shutter.wav",
+    "stamp": "sfx/stamp.wav",
+    "ding": "sfx/ding.wav",
+    "cards": "sfx/cards.wav",
+    "beep": "sfx/beep.wav",
+    "boing": "sfx/boing.wav",
+    "sparkle": "sfx/sparkle.wav",
+    "pop": "sfx/pop.wav",
+    "tick": "sfx/tick.wav"
+  }
 }

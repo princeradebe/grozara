@@ -1,7 +1,8 @@
 // Generates the music bed and sound effects with ElevenLabs and records what exists in
 // src/sound.json. The video plays whatever the manifest lists, so it still renders without them.
 // Needs ELEVENLABS_API_KEY in video/.env. Pass effect ids to regenerate only those: `pnpm sound pop tick`.
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 
 const KEY = process.env.ELEVENLABS_API_KEY;
 if (!KEY) {
@@ -24,8 +25,8 @@ const SFX = [
   ["whoosh", "Fast, airy whoosh swipe for a bold graphic transition, clean and modern", 0.7],
   ["slam", "Punchy deep thump impact as huge bold text slams onto the screen, short and tight", 0.6],
   ["drop", "Cute cartoon character landing with a soft squishy bounce plop", 0.6],
-  ["pop", "Bubbly cartoon pop for a sticker appearing, bright and cute", 0.4],
-  ["tick", "Satisfying soft UI checkbox tick click with a tiny sparkle", 0.4],
+  ["pop", "Bubbly cartoon pop for a sticker appearing, bright and cute", 0.5],
+  ["tick", "Satisfying soft UI checkbox tick click with a tiny sparkle", 0.5],
   ["shutter", "Phone camera shutter click with a bright flash", 0.6],
   ["stamp", "Rubber stamp thud slapped hard onto paper", 0.5],
   ["ding", "Friendly phone notification ding chime, warm and short", 0.7],
@@ -70,11 +71,16 @@ if (only.size === 0 || only.has("music")) {
 for (const [id, text, seconds] of SFX) {
   if (only.size > 0 && !only.has(id)) continue;
   try {
-    manifest.sfx[id] = await save(
+    const mp3 = await save(
       `${API}/sound-generation?output_format=mp3_44100_128`,
       { text, duration_seconds: seconds, prompt_influence: 0.6 },
       `sfx/${id}.mp3`,
     );
+    // Leading silence would land the hit late, so the effect starts on its first sound.
+    const wav = `sfx/${id}.wav`;
+    execFileSync("ffmpeg", ["-v", "error", "-y", "-i", `public/${mp3}`, "-af", "silenceremove=start_periods=1:start_threshold=-50dB", "-ar", "48000", `public/${wav}`]);
+    rmSync(`public/${mp3}`);
+    manifest.sfx[id] = wav;
     console.log(`sfx    ${id}`);
   } catch (error) {
     console.warn(`sfx    ${id} failed: ${error.message}`);
