@@ -1,0 +1,35 @@
+{
+  "source": "tessa",
+  "lines": [
+    {
+      "id": "hello",
+      "file": "vo/hello.wav",
+      "seconds": 2.676
+    },
+    {
+      "id": "list",
+      "file": "vo/list.wav",
+      "seconds": 2.681
+    },
+    {
+      "id": "snap",
+      "file": "vo/snap.wav",
+      "seconds": 5.498
+    },
+    {
+      "id": "share",
+      "file": "vo/share.wav",
+      "seconds": 3.279
+    },
+    {
+      "id": "scan",
+      "file": "vo/scan.wav",
+      "seconds": 3.151
+    },
+    {
+      "id": "outro",
+      "file": "vo/outro.wav",
+      "seconds": 5.236
+    }
+  ]
+}

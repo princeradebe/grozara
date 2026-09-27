@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* The site's components carry their own Tailwind classes. */
+@source "../../src/components";
+@source "./";
+
+/* Mirrors the site's @theme in src/app/globals.css. */
+@theme {
+  --color-forest: #183631;
+  --color-forest-deep: #0d211d;
+  --color-forest-lift: #24524a;
+  --color-lime: #7ec340;
+  --color-lime-bright: #a5e063;
+  --color-amber: #ffb902;
+  --color-paper: #f1eddf;
+  --color-label: #fffcf5;
+  --color-mist: #f7f9f5;
+  --color-coral: #ff6b5b;
+  --color-blush: #ff8fa3;
+}
+
+@theme inline {
+  --font-display: var(--font-nunito);
+  --font-sans: var(--font-inter);
+  --font-hand: var(--font-caveat);
+}
+
+/* CSS animations run on the wall clock, not the video's frames, so the mocks' ones are switched off. */
+.animate-ping {
+  animation: none;
+}

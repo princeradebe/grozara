@@ -1,0 +1,32 @@
+{
+  "name": "grozara-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "assets": "node scripts/sync-site-assets.mjs",
+    "voice": "node --env-file-if-exists=.env scripts/voice.mjs",
+    "voices": "node --env-file-if-exists=.env scripts/voices.mjs",
+    "sound": "node --env-file-if-exists=.env scripts/sound.mjs",
+    "master": "node scripts/master.mjs",
+    "studio": "node scripts/sync-site-assets.mjs && remotion studio",
+    "render": "node scripts/sync-site-assets.mjs && remotion render Promo out/grozara-30s.mp4",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.529",
+    "@remotion/cli": "4.0.529",
+    "@remotion/google-fonts": "4.0.529",
+    "@remotion/media-utils": "4.0.529",
+    "@remotion/motion-blur": "4.0.529",
+    "@remotion/tailwind-v4": "4.0.529",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "remotion": "4.0.529"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^5.9.3"
+  }
+}
