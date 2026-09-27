@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 
 import { Icon } from "./Icon";
 import { Avatar, AvatarStack, BRANDS, CheckCircle, GlassCircle, LiveDot, LoyaltyCard, PEOPLE, type Person, StickerCard, TabBar } from "./parts";
@@ -58,7 +59,9 @@ export function HomeScreen() {
   );
 }
 
-const LIST_ROWS: [string, string, boolean][] = [
+export type ListRow = [name: string, size: string, done: boolean];
+
+export const LIST_ROWS: ListRow[] = [
   ["Milk", "2 L", true],
   ["Brown bread", "", true],
   ["Eggs", "× 6", false],
@@ -67,7 +70,20 @@ const LIST_ROWS: [string, string, boolean][] = [
   ["Rooibos tea", "80 bags", false],
 ];
 
-export function ListScreen() {
+/**
+ * A pinned list mid-shop. Pass `rows` and `onToggle` to let visitors tick rows off, and `wrapRow`
+ * to wrap each row's button (the homepage uses it for swipe-to-delete).
+ */
+export function ListScreen({
+  rows = LIST_ROWS,
+  onToggle,
+  wrapRow,
+}: {
+  rows?: readonly ListRow[];
+  onToggle?: (index: number) => void;
+  wrapRow?: (row: ReactNode, index: number) => ReactNode;
+} = {}) {
+  const picked = rows.filter((row) => row[2]).length;
   return (
     <div className="absolute inset-0 pt-[60px]">
       <div className="flex items-center justify-between px-[16px]">
@@ -79,15 +95,37 @@ export function ListScreen() {
           <span className="size-[7px] rounded-full bg-amber" /> Pinned for your next shop
         </p>
         <h2 className="mt-[4px] font-display text-[34px] leading-none tracking-tight">Weekend shop</h2>
-        <p className="mt-[8px] text-[15px] text-forest/55">2 of 6 picked up</p>
+        <p className="mt-[8px] text-[15px] text-forest/55">
+          {picked} of {rows.length} picked up
+        </p>
         <ul className="mt-[18px] divide-y divide-forest/8 rounded-[22px] bg-white px-[16px] shadow-[0_10px_24px_-18px_rgba(10,40,33,0.5)]">
-          {LIST_ROWS.map(([name, size, done]) => (
-            <li key={name} className="flex items-center gap-[14px] py-[15px]">
-              <CheckCircle checked={done} size={26} />
-              <span className={`text-[17px] font-medium ${done ? "text-forest/40" : ""}`}>{name}</span>
-              {size ? <span className={`text-[15px] text-forest/45 ${done ? "opacity-60" : ""}`}>{size}</span> : null}
-            </li>
-          ))}
+          {rows.map(([name, size, done], i) => {
+            const row = (
+              <>
+                <CheckCircle checked={done} size={26} />
+                <span className={`text-[17px] font-medium transition-colors ${done ? "text-forest/40" : ""}`}>{name}</span>
+                {size ? <span className={`text-[15px] text-forest/45 ${done ? "opacity-60" : ""}`}>{size}</span> : null}
+              </>
+            );
+            if (!onToggle) {
+              return (
+                <li key={name} className="flex items-center gap-[14px] py-[15px]">
+                  {row}
+                </li>
+              );
+            }
+            const button = (
+              <button
+                type="button"
+                aria-pressed={done}
+                onClick={() => onToggle(i)}
+                className="flex w-full cursor-pointer items-center gap-[14px] bg-white py-[15px] text-left"
+              >
+                {row}
+              </button>
+            );
+            return <li key={name}>{wrapRow ? wrapRow(button, i) : button}</li>;
+          })}
         </ul>
       </div>
       <div className="absolute inset-x-[16px] bottom-[34px] flex items-center gap-[10px] rounded-full bg-white p-[6px] pl-[20px] shadow-[0_12px_28px_-14px_rgba(10,40,33,0.6)]">
@@ -100,7 +138,9 @@ export function ListScreen() {
   );
 }
 
-const SHARED_ROWS: { name: string; size: string; done: boolean; by?: Person; live?: boolean; added?: Person }[] = [
+export type SharedRow = { name: string; size: string; done: boolean; by?: Person; live?: boolean; added?: Person };
+
+export const SHARED_ROWS: SharedRow[] = [
   { name: "Boerewors", size: "2 kg", done: true, by: PEOPLE.thandi },
   { name: "Chakalaka", size: "2 tins", done: true, by: PEOPLE.thandi },
   { name: "Rolls", size: "× 12", done: true, by: PEOPLE.thandi, live: true },
@@ -111,8 +151,12 @@ const SHARED_ROWS: { name: string; size: string; done: boolean; by?: Person; liv
   { name: "Serviettes", size: "1 pack", done: false },
 ];
 
-/** A shared list mid-shop: Thandi is in the aisle ticking things off, Sipho adds from home. */
-export function SharedListScreen() {
+/**
+ * A shared list mid-shop: Thandi is in the aisle ticking things off, Sipho adds from home. Pass
+ * `rows` to drive it (a live simulation) and `onToggle` to let visitors tick rows too.
+ */
+export function SharedListScreen({ rows = SHARED_ROWS, onToggle }: { rows?: readonly SharedRow[]; onToggle?: (index: number) => void } = {}) {
+  const picked = rows.filter((row) => row.done).length;
   return (
     <div className="absolute inset-0 pt-[60px]">
       <div className="flex items-center justify-between px-[16px]">
@@ -127,24 +171,42 @@ export function SharedListScreen() {
           <LiveDot size={8} /> Thandi is shopping now
         </p>
         <h2 className="mt-[8px] font-display text-[34px] leading-none tracking-tight">Family braai</h2>
-        <p className="mt-[8px] text-[15px] text-forest/55">3 of 8 picked up · shared with 3</p>
+        <p className="mt-[8px] text-[15px] text-forest/55">
+          {picked} of {rows.length} picked up · shared with 3
+        </p>
         <ul className="mt-[18px] divide-y divide-forest/8 rounded-[22px] bg-white px-[16px] shadow-[0_10px_24px_-18px_rgba(10,40,33,0.5)]">
-          {SHARED_ROWS.map((row) => (
-            <li
-              key={row.name}
-              className={`relative flex items-center gap-[14px] py-[14px] ${row.live ? "-mx-[16px] bg-lime/12 px-[16px]" : ""}`}
-            >
-              <CheckCircle checked={row.done} size={26} />
-              <span className="min-w-0 flex-1">
-                <span className={`text-[17px] font-medium ${row.done ? "text-forest/40" : ""}`}>{row.name}</span>
-                <span className={`ml-[8px] text-[15px] text-forest/45 ${row.done ? "opacity-60" : ""}`}>{row.size}</span>
-                {row.live ? <span className="block text-[12px] font-semibold text-lime">Ticked just now</span> : null}
-                {row.added ? <span className="block text-[12px] font-semibold text-amber">Added by {row.added.name}</span> : null}
-              </span>
-              {row.by ? <Avatar person={row.by} size={24} /> : null}
-              {row.added ? <Avatar person={row.added} size={24} /> : null}
-            </li>
-          ))}
+          {rows.map((row, i) => {
+            const content = (
+              <>
+                <CheckCircle checked={row.done} size={26} />
+                <span className="min-w-0 flex-1">
+                  <span className={`text-[17px] font-medium transition-colors ${row.done ? "text-forest/40" : ""}`}>{row.name}</span>
+                  <span className={`ml-[8px] text-[15px] text-forest/45 ${row.done ? "opacity-60" : ""}`}>{row.size}</span>
+                  {row.live ? <span className="block text-[12px] font-semibold text-lime">Ticked just now</span> : null}
+                  {row.added ? <span className="block text-[12px] font-semibold text-amber">Added by {row.added.name}</span> : null}
+                </span>
+                {row.by ? <Avatar person={row.by} size={24} /> : null}
+                {row.added ? <Avatar person={row.added} size={24} /> : null}
+              </>
+            );
+            const highlight = row.live ? "-mx-[16px] bg-lime/12 px-[16px]" : "";
+            return onToggle ? (
+              <li key={row.name} className={`relative transition-colors duration-500 ${highlight}`}>
+                <button
+                  type="button"
+                  aria-pressed={row.done}
+                  onClick={() => onToggle(i)}
+                  className="flex w-full cursor-pointer items-center gap-[14px] py-[14px] text-left"
+                >
+                  {content}
+                </button>
+              </li>
+            ) : (
+              <li key={row.name} className={`relative flex items-center gap-[14px] py-[14px] ${highlight}`}>
+                {content}
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="absolute inset-x-[16px] bottom-[34px] flex items-center gap-[10px] rounded-full bg-white p-[6px] pl-[20px] shadow-[0_12px_28px_-14px_rgba(10,40,33,0.6)]">
@@ -157,7 +219,18 @@ export function SharedListScreen() {
   );
 }
 
-export function BoardScreen() {
+export type BoardItem = "rice" | "tuna" | "wood";
+
+export const BOARD_TICKS: Record<BoardItem, boolean> = { rice: true, tuna: false, wood: false };
+export const TUNA_NOTE = "in brine, not oil!";
+
+/** A Boyfriend Mode board. Pass `ticks`/`onToggle` to tick stickers off and `tunaNote` to rewrite the note. */
+export function BoardScreen({
+  ticks = BOARD_TICKS,
+  onToggle,
+  tunaNote = TUNA_NOTE,
+}: { ticks?: Record<BoardItem, boolean>; onToggle?: (item: BoardItem) => void; tunaNote?: string } = {}) {
+  const woodTick = <CheckCircle checked={ticks.wood} size={22} />;
   return (
     <div className="absolute inset-0 bg-paper pt-[60px]">
       <div
@@ -178,7 +251,8 @@ export function BoardScreen() {
           name="Rice"
           size="1 kg"
           buy={2}
-          checked
+          checked={ticks.rice}
+          onToggle={onToggle && (() => onToggle("rice"))}
           width={168}
           aspect={1.25}
           tilt={-4}
@@ -189,19 +263,30 @@ export function BoardScreen() {
           alt="A tin of tuna as a sticker"
           name="Tuna"
           size="170 g"
-          note="in brine, not oil!"
+          note={tunaNote}
           buy={3}
+          checked={ticks.tuna}
+          onToggle={onToggle && (() => onToggle("tuna"))}
           width={182}
           aspect={0.9}
           tilt={5}
           className="absolute top-[150px] right-[4px]"
         />
         <div className="absolute top-[392px] left-[20px] w-[150px] rotate-[3deg]">
-          <div className="grid h-[118px] place-items-center rounded-[16px] border-[5px] border-white bg-gradient-to-br from-[#FFE9C7] to-[#F7C98B] shadow-[0_8px_10px_-4px_rgba(0,0,0,0.22)]">
+          <div
+            className={`grid h-[118px] place-items-center rounded-[16px] border-[5px] border-white bg-gradient-to-br from-[#FFE9C7] to-[#F7C98B] shadow-[0_8px_10px_-4px_rgba(0,0,0,0.22)] transition-opacity ${ticks.wood ? "opacity-65" : ""}`}
+          >
             <span className="font-hand text-[28px] text-forest/80">Braai wood</span>
           </div>
           <div className="mt-[5px] flex items-center gap-[8px] rounded-[10px] bg-label p-[9px] text-[15px] font-semibold">
-            <CheckCircle size={22} /> 1 bag
+            {onToggle ? (
+              <button type="button" onClick={() => onToggle("wood")} aria-pressed={ticks.wood} aria-label="Tick off braai wood" className="-m-[6px] cursor-pointer rounded-full p-[6px]">
+                {woodTick}
+              </button>
+            ) : (
+              woodTick
+            )}
+            <span className={`transition-opacity ${ticks.wood ? "opacity-45" : ""}`}>1 bag</span>
           </div>
         </div>
       </div>
@@ -240,8 +325,24 @@ export function WalletScreen() {
   );
 }
 
-/** A single card opened at the till: the card, its barcode below, the screen brightened. */
-export function CardDetailScreen() {
+const CARD_H = 346 * 0.63;
+const BARCODE_H = 211;
+const PANEL_GAP = 18;
+
+/**
+ * A single card opened at the till: the card and its barcode, with the app's swap knob on the
+ * seam between them. Pass `barcodeFirst` and `onSwap` to let visitors swap the panels, as in the app.
+ */
+export function CardDetailScreen({ barcodeFirst = false, onSwap }: { barcodeFirst?: boolean; onSwap?: () => void } = {}) {
+  const cardTop = barcodeFirst ? BARCODE_H + PANEL_GAP : 0;
+  const barcodeTop = barcodeFirst ? 0 : CARD_H + PANEL_GAP;
+  const seam = (barcodeFirst ? BARCODE_H : CARD_H) + PANEL_GAP / 2;
+  const glide = "transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.25,1)]";
+  const knob = (
+    <span className="grid size-[48px] place-items-center rounded-full border-[1.5px] border-forest/65 bg-white text-forest shadow-[0_2px_5px_rgba(0,0,0,0.08)]">
+      <Icon name="swapVertical" className="size-[24px]" />
+    </span>
+  );
   return (
     <div className="absolute inset-0 bg-white pt-[62px]">
       <div className="flex items-center justify-between px-[16px]">
@@ -250,17 +351,35 @@ export function CardDetailScreen() {
         <GlassCircle icon="more" />
       </div>
       <div className="mt-[26px] px-[22px]">
-        <LoyaltyCard brand={BRANDS.leaf} width={346} favourite />
-        <div className="relative mt-[18px] rounded-[26px] bg-white p-[22px] shadow-[0_14px_34px_-20px_rgba(10,40,33,0.55)] ring-1 ring-forest/6">
-          <span className="absolute -top-[30px] left-1/2 grid size-[48px] -translate-x-1/2 place-items-center rounded-full border-[3px] border-white bg-forest text-white">
-            <Icon name="barcode" className="size-[22px]" />
-          </span>
-          <div className="mt-[10px] flex h-[120px] items-stretch justify-center gap-[3px]">
-            {Array.from({ length: 44 }, (_, i) => (
-              <span key={i} className="bg-forest" style={{ width: [2, 4, 1, 3, 2, 5, 1, 2][i % 8] }} />
-            ))}
+        <div className="relative" style={{ height: CARD_H + PANEL_GAP + BARCODE_H }}>
+          <div className={`absolute inset-x-0 top-0 ${glide}`} style={{ transform: `translateY(${cardTop}px)` }}>
+            <LoyaltyCard brand={BRANDS.leaf} width={346} favourite />
           </div>
-          <p className="mt-[12px] text-center font-mono text-[17px] tracking-[0.2em]">6009 1204 0931</p>
+          <div
+            className={`absolute inset-x-0 top-0 rounded-[26px] bg-white p-[22px] shadow-[0_14px_34px_-20px_rgba(10,40,33,0.55)] ring-1 ring-forest/6 ${glide}`}
+            style={{ height: BARCODE_H, transform: `translateY(${barcodeTop}px)` }}
+          >
+            <div className="mt-[10px] flex h-[120px] items-stretch justify-center gap-[3px]">
+              {Array.from({ length: 44 }, (_, i) => (
+                <span key={i} className="bg-forest" style={{ width: [2, 4, 1, 3, 2, 5, 1, 2][i % 8] }} />
+              ))}
+            </div>
+            <p className="mt-[12px] text-center font-mono text-[17px] tracking-[0.2em]">6009 1204 0931</p>
+          </div>
+          <div className={`absolute top-0 left-1/2 z-10 ${glide}`} style={{ transform: `translate(-50%, ${seam - 24}px)` }}>
+            {onSwap ? (
+              <button
+                type="button"
+                onClick={onSwap}
+                aria-label={barcodeFirst ? "Move card to top" : "Move barcode to top"}
+                className="-mx-[22px] -my-[8px] cursor-pointer px-[22px] py-[8px] transition-transform active:scale-90"
+              >
+                {knob}
+              </button>
+            ) : (
+              knob
+            )}
+          </div>
         </div>
         <div className="mt-[18px] grid grid-cols-3 gap-[10px] text-[13px] font-semibold">
           {(["sun", "copy", "share"] as const).map((icon, i) => (

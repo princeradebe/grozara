@@ -5,22 +5,23 @@ import { BRANDS, BuyStamp, LoyaltyCard, StickerCard } from "@/components/mocks/p
 import { PhoneFrame } from "@/components/mocks/PhoneFrame";
 import { HomeScreen, ListScreen, WalletScreen } from "@/components/mocks/screens";
 import { StoreBadges } from "@/components/site/StoreBadges";
-import { FAQS, FOOTER_COLUMNS, LEGAL, SIGN_OFF, TAGLINE, TICKER } from "@/content/site";
+import { FAQS, FOOTER_COLUMNS, LEGAL, SIGN_OFF, TAGLINE } from "@/content/site";
 
-import { Kicker, Ticker, tilt, Verb } from "./ui";
+import { TickableSticker } from "./Interactive";
+import { Kicker, tilt, Verb } from "./ui";
 
 export function Faq() {
   return (
-    <section id="faq" className="relative overflow-clip bg-forest text-mist">
+    <section id="faq" className="relative scroll-mt-20 overflow-clip bg-forest text-mist">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 pt-16 pb-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-12 lg:pt-24 lg:pb-28">
         <div className="lg:sticky lg:top-10 lg:self-start">
           <Verb className="dir-reveal-left text-lime-bright">Ask it.</Verb>
           <Kicker className="mt-8 bg-lime-bright text-forest">FAQ</Kicker>
           <h2 className="mt-5 font-display text-[clamp(2.3rem,4.6vw,4rem)] leading-[0.98] tracking-[-0.025em]">Good questions.</h2>
-          <div aria-hidden className="relative mt-10 hidden h-[300px] lg:block">
+          <div className="relative mt-10 hidden h-[300px] lg:block">
             <div className="absolute top-0 left-4">
               <div className="dir-float-side">
-                <StickerCard
+                <TickableSticker
                   src="/stickers/tuna.png"
                   alt=""
                   name="Tuna"
@@ -33,25 +34,28 @@ export function Faq() {
                 />
               </div>
             </div>
-            <span className="absolute top-6 left-[250px] grid size-[120px] rotate-[10deg] place-items-center rounded-full bg-coral font-display text-[84px] leading-none text-forest shadow-[0_20px_34px_-16px_rgba(0,0,0,0.7)]">
+            <span aria-hidden className="absolute top-6 left-[250px] grid size-[120px] rotate-[10deg] place-items-center rounded-full bg-coral font-display text-[84px] leading-none text-forest shadow-[0_20px_34px_-16px_rgba(0,0,0,0.7)]">
               ?
             </span>
           </div>
         </div>
 
-        <div className="dir-reveal border-t border-white/12">
+        <div className="faq-list dir-reveal border-t border-white/12">
           {FAQS.map((faq, i) => (
-            <details key={faq.q} className="group border-b border-white/12" open={i === 0}>
+            // Sharing a name makes these one accordion: opening one closes the rest, natively.
+            <details key={faq.q} name="faq" className="faq-item group border-b border-white/12" open={i === 0}>
               <summary className="flex cursor-pointer list-none items-center gap-4 py-6 lg:gap-6 [&::-webkit-details-marker]:hidden">
-                <span aria-hidden className="w-14 shrink-0 font-display text-4xl leading-none tracking-[-0.04em] text-lime-bright lg:w-20 lg:text-6xl">
+                <span aria-hidden className="faq-num w-14 shrink-0 origin-left font-display text-4xl leading-none tracking-[-0.04em] text-lime-bright transition-[opacity,scale] duration-500 group-open:scale-110 lg:w-20 lg:text-6xl">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="flex-1 font-display text-xl leading-tight lg:text-[1.65rem]">{faq.q}</span>
-                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-lime-bright text-forest transition-transform duration-300 group-open:rotate-45">
+                <span className="flex-1 font-display text-xl leading-tight transition-[color,translate] duration-300 group-open:text-lime-bright group-hover:translate-x-1 lg:text-[1.65rem]">
+                  {faq.q}
+                </span>
+                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-lime-bright text-forest transition-[rotate,background-color,color] duration-500 ease-[cubic-bezier(0.3,1.6,0.5,1)] group-open:rotate-[135deg] group-open:bg-coral group-open:text-label">
                   <Icon name="plus" className="size-6" />
                 </span>
               </summary>
-              <p className="-mt-1 max-w-xl pr-14 pb-7 pl-[4.5rem] text-lg leading-relaxed text-mist/75 lg:pl-[6.5rem]">{faq.a}</p>
+              <p className="faq-answer -mt-1 max-w-xl pr-14 pb-7 pl-[4.5rem] text-lg leading-relaxed text-mist/75 lg:pl-[6.5rem]">{faq.a}</p>
             </details>
           ))}
         </div>
@@ -62,7 +66,7 @@ export function Faq() {
 
 export function GetIt() {
   return (
-    <section id="get" className="relative overflow-clip bg-lime text-forest">
+    <section id="get" className="relative scroll-mt-20 overflow-clip bg-lime text-forest">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_30%,rgba(165,224,99,0.95),transparent_70%)]" />
       <div className="relative mx-auto max-w-7xl px-6 pt-16 text-center lg:px-12 lg:pt-24">
         <h2 className="dir-reveal-zoom font-display text-[clamp(5.5rem,22vw,19rem)] leading-[0.8] tracking-[-0.055em]">Get it.</h2>
@@ -157,8 +161,6 @@ export function Footer() {
           ))}
         </div>
       </div>
-
-      <Ticker words={TICKER} seam="" bar="bg-lime" ink="text-forest" spark="text-forest-deep/70" rotate="-rotate-[1.5deg]" />
 
       <div aria-hidden className="dir-wordmark">
         <p className="-mb-[0.2em] text-center font-display text-[25vw] leading-[0.9] tracking-[-0.055em] whitespace-nowrap text-lime">

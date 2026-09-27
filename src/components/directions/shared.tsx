@@ -9,7 +9,7 @@ export const DIRECTIONS = [
   { slug: "2", name: "Night stage", note: "Forest night, a lit stage of three phones: lists, Boyfriend Mode and the wallet." },
   { slug: "3", name: "Scrapbook", note: "Leads with Boyfriend Mode on the paper board, with real stickers slapped on the page." },
   { slug: "4", name: "Bento", note: "One headline over a bento grid: every feature gets its own tile and mock." },
-  { slug: "5", name: "Lime pop", note: "Loud lime, huge verbs (List it. Snap it. Scan it.), two phones and a feature marquee." },
+  { slug: "5", name: "Lime pop", note: "Loud lime, huge verbs (List it. Snap it. Scan it.) and tilted phones on colour bands." },
 ] as const;
 
 export function Nav({ tone }: { tone: "light" | "dark" | "lime" }) {

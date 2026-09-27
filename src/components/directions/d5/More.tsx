@@ -1,29 +1,17 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { Icon } from "@/components/mocks/Icon";
-import { AvatarStack, BRANDS, CheckCircle, LoyaltyCard, PEOPLE, StickerCard } from "@/components/mocks/parts";
 import { EXTRAS, STEPS } from "@/content/site";
 
-import { BigTick, Kicker } from "./ui";
+import { ClearTileArt, FavouritesTileArt, HouseholdArt, ScanCardArt, ShareTileArt, TickableSticker, TryIt } from "./Interactive";
+import { Kicker } from "./ui";
 
-/** Tile colour, resting tilt and a little mock for each extra, in EXTRAS order. */
-const TILES: { tone: string; tilt: string; art: ReactNode }[] = [
-  {
-    tone: "bg-lime text-forest",
-    tilt: "lg:-rotate-[2.5deg]",
-    art: (
-      <div className="relative h-full">
-        <span className="absolute top-3 left-2 grid size-[74px] -rotate-[8deg] place-items-center rounded-[20px] bg-white shadow-[0_14px_24px_-14px_rgba(0,0,0,0.6)]">
-          <Image src="/brand/grozara-icon.svg" alt="" width={64} height={64} className="size-[52px] rounded-[12px]" />
-        </span>
-        <span className="absolute top-[68px] left-[64px] grid size-[44px] place-items-center rounded-full bg-forest text-lime-bright ring-4 ring-lime">
-          <Icon name="share" className="size-[22px]" />
-        </span>
-        <StickerCard src="/stickers/tuna.png" alt="" name="Tuna" buy={1} width={124} aspect={0.9} tilt={9} className="absolute top-0 right-1" />
-      </div>
-    ),
-  },
+/**
+ * Tile colour, resting tilt and a little mock for each extra, in EXTRAS order. `play` names what
+ * visitors can do with the interactive ones.
+ */
+const TILES: { tone: string; tilt: string; art: ReactNode; play?: string }[] = [
+  { tone: "bg-lime text-forest", tilt: "lg:-rotate-[2.5deg]", art: <ShareTileArt />, play: "Try it: share the photo to Grozara" },
   {
     tone: "bg-coral text-forest",
     tilt: "lg:rotate-[2deg]",
@@ -38,38 +26,8 @@ const TILES: { tone: string; tilt: string; art: ReactNode }[] = [
       </div>
     ),
   },
-  {
-    tone: "bg-amber text-forest",
-    tilt: "lg:-rotate-[1.5deg]",
-    art: (
-      <div className="relative h-full">
-        <LoyaltyCard brand={BRANDS.corner} width={190} className="absolute top-2 left-0 -rotate-[9deg]" />
-        <LoyaltyCard brand={BRANDS.leaf} width={200} favourite className="absolute top-[52px] right-0 rotate-[6deg]" />
-        <span className="absolute -top-2 right-2 grid size-[52px] place-items-center rounded-full bg-forest text-amber">
-          <Icon name="star" className="size-[26px]" />
-        </span>
-      </div>
-    ),
-  },
-  {
-    tone: "bg-forest text-mist",
-    tilt: "lg:rotate-[2.5deg]",
-    art: (
-      <div className="grid h-full content-center">
-        <div className="rotate-[-3deg] rounded-[22px] bg-white p-3 text-forest shadow-[0_18px_30px_-16px_rgba(0,0,0,0.8)]">
-          {["Milk", "Brown bread", "Eggs"].map((item) => (
-            <div key={item} className="flex items-center gap-3 border-b border-forest/8 px-1 py-2 last:border-0">
-              <CheckCircle checked size={22} />
-              <span className="font-medium text-forest/40 line-through decoration-forest/30">{item}</span>
-            </div>
-          ))}
-          <span className="mt-2 flex items-center justify-center gap-2 rounded-full bg-lime py-2.5 font-display text-lg text-white">
-            <BigTick className="size-5" /> Clear
-          </span>
-        </div>
-      </div>
-    ),
-  },
+  { tone: "bg-amber text-forest", tilt: "lg:-rotate-[1.5deg]", art: <FavouritesTileArt />, play: "Try it: tap a card to make it your favourite" },
+  { tone: "bg-forest text-mist", tilt: "lg:rotate-[2.5deg]", art: <ClearTileArt />, play: "Try it: tick items, then clear them" },
 ];
 
 export function Extras() {
@@ -92,7 +50,7 @@ export function Extras() {
                 <div
                   className={`flex h-full flex-col rounded-[2.25rem] p-6 shadow-[0_30px_50px_-30px_rgba(24,54,49,0.7)] ${tile.tone} ${tile.tilt}`}
                 >
-                  <div aria-hidden className="h-[190px]">
+                  <div {...(tile.play ? { role: "group", "aria-label": tile.play } : { "aria-hidden": true })} className="h-[190px]">
                     {tile.art}
                   </div>
                   <h3 className="mt-6 flex items-center gap-2.5 font-display text-[1.75rem] leading-[1.02] tracking-[-0.02em]">
@@ -110,13 +68,11 @@ export function Extras() {
   );
 }
 
-/** A small mock under each step's numeral: a sticker, the household, a card. */
+/** A small mock under each step's numeral, each one playable: tick the rice, add the household, scan the card. */
 const STEP_ART: ReactNode[] = [
-  <StickerCard key="rice" src="/stickers/rice.png" alt="" name="Rice" size="1 kg" buy={2} width={132} aspect={1.25} tilt={8} />,
-  <span key="people" className="block rotate-[-6deg]">
-    <AvatarStack people={[PEOPLE.thandi, PEOPLE.sipho, PEOPLE.lerato]} size={78} />
-  </span>,
-  <LoyaltyCard key="card" brand={BRANDS.basket} width={210} className="rotate-[7deg]" />,
+  <TickableSticker key="rice" src="/stickers/rice.png" alt="" name="Rice" size="1 kg" buy={2} width={132} aspect={1.25} tilt={8} />,
+  <HouseholdArt key="people" />,
+  <ScanCardArt key="card" />,
 ];
 
 const NUMERAL_INK = ["text-forest", "text-coral", "text-lime"];
@@ -130,6 +86,7 @@ export function HowItWorks() {
           <h2 className="mt-5 font-display text-[clamp(3.2rem,9vw,8rem)] leading-[0.86] tracking-[-0.04em]">
             One, two, <span className="text-label [text-shadow:0.05em_0.05em_0_var(--color-forest)]">shop.</span>
           </h2>
+          <TryIt className="mt-6">Tap the rice, the household and the card</TryIt>
         </div>
         <ol className="mt-10 grid gap-12 md:grid-cols-3 md:gap-8 lg:mt-14">
           {STEPS.map((step, i) => (
@@ -141,7 +98,7 @@ export function HowItWorks() {
                 >
                   {i + 1}
                 </span>
-                <div aria-hidden className="absolute right-0 bottom-2 md:-right-2 lg:right-2">
+                <div className="absolute right-0 bottom-2 md:-right-2 lg:right-2">
                   {STEP_ART[i]}
                 </div>
               </div>

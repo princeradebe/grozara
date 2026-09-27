@@ -113,7 +113,10 @@ export function LoyaltyCard({
   );
 }
 
-/** A Boyfriend Mode sticker: the white-outlined photo, its paper label and the BUY stamp. */
+/**
+ * A Boyfriend Mode sticker: the white-outlined photo, its paper label and the BUY stamp. With
+ * `onToggle` the tick (and the photo) become a button; with `onNoteChange` the note is editable.
+ */
 export function StickerCard({
   src,
   alt,
@@ -126,6 +129,8 @@ export function StickerCard({
   aspect,
   tilt = 0,
   className = "",
+  onToggle,
+  onNoteChange,
 }: {
   src: string;
   alt: string;
@@ -138,8 +143,12 @@ export function StickerCard({
   aspect: number;
   tilt?: number;
   className?: string;
+  onToggle?: () => void;
+  onNoteChange?: (note: string) => void;
 }) {
   const photoH = width * aspect;
+  const tick = <CheckCircle checked={checked} size={width * 0.135} />;
+  const noteStyle = { fontSize: width * 0.1 };
   return (
     <figure className={`${positioned(className)} ${className}`} style={{ width, transform: `rotate(${tilt}deg)` }}>
       <div className="relative" style={{ height: photoH }}>
@@ -149,22 +158,46 @@ export function StickerCard({
           fill
           sizes={`${Math.round(width * 2)}px`}
           loading="eager"
-          className={`object-contain drop-shadow-[0_8px_10px_rgba(0,0,0,0.22)] ${checked ? "opacity-65" : ""}`}
+          className={`object-contain drop-shadow-[0_8px_10px_rgba(0,0,0,0.22)] transition-opacity ${checked ? "opacity-65" : ""}`}
         />
-        <BuyStamp count={buy} size={width * 0.3} className="absolute -right-[6%] -bottom-[6%] z-10" />
+        {/* The photo is a big, obvious target for pointers; the tick below is the accessible control. */}
+        {onToggle ? <button type="button" tabIndex={-1} aria-hidden onClick={onToggle} className="absolute inset-0 cursor-pointer" /> : null}
+        <BuyStamp count={buy} size={width * 0.3} className="pointer-events-none absolute -right-[6%] -bottom-[6%] z-10" />
       </div>
       <figcaption
         className="mt-[5px] flex items-start gap-[8px] rounded-[10px] bg-label text-forest shadow-[0_3px_6px_-2px_rgba(0,0,0,0.14)]"
         style={{ padding: width * 0.06 }}
       >
-        <CheckCircle checked={checked} size={width * 0.135} />
-        <span className={`min-w-0 leading-tight ${checked ? "opacity-45" : ""}`}>
+        {onToggle ? (
+          <button
+            type="button"
+            onClick={onToggle}
+            aria-pressed={checked}
+            aria-label={`Tick off ${name}`}
+            className="-m-[6px] shrink-0 cursor-pointer rounded-full p-[6px]"
+          >
+            {tick}
+          </button>
+        ) : (
+          tick
+        )}
+        <span className={`min-w-0 flex-1 leading-tight transition-opacity ${checked ? "opacity-45" : ""}`}>
           <span className="block font-semibold" style={{ fontSize: width * 0.09 }}>
             {name}
             {size ? <span className="ml-[0.35em] font-normal text-forest/55">{size}</span> : null}
           </span>
-          {note ? (
-            <span className="block font-hand text-forest" style={{ fontSize: width * 0.1 }}>
+          {onNoteChange ? (
+            <input
+              value={note ?? ""}
+              onChange={(event) => onNoteChange(event.target.value)}
+              maxLength={28}
+              aria-label={`Note for ${name}`}
+              className="block w-full rounded-[4px] bg-transparent font-hand text-forest outline-none placeholder:text-forest/35 focus:bg-forest/6"
+              placeholder="add a note"
+              style={noteStyle}
+            />
+          ) : note ? (
+            <span className="block font-hand text-forest" style={noteStyle}>
               {note}
             </span>
           ) : null}
