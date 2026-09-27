@@ -14,6 +14,10 @@ Marketing site for Grozara (iPhone app: shopping lists, loyalty cards and Boyfri
 Africa). **Read `docs/DESIGN_BRIEF.md` first**: it has the scroll story, Zara's 3D and physics spec,
 the palette, the architecture and what the app can truthfully claim.
 
+The homepage (`/`) is Direction 5, "Lime pop" (`src/components/directions/Direction5.tsx`), chosen on
+Sep 27 2026. The brief's 3D night garden with Zara lives at `/3d`; directions 1–4 stay at `/directions` for
+comparison.
+
 ## Commands
 
 - `pnpm dev` — dev server on http://localhost:3000 (`.claude/launch.json` runs this for the preview)

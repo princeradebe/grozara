@@ -1,5 +1,8 @@
 # Grozara landing page — design brief
 
+> **Status (Sep 27 2026):** the homepage is Direction 5, "Lime pop", a static page with no 3D. The
+> scroll-driven 3D story below lives at `/3d`. Its palette, claims and Zara spec still apply.
+
 A one-page, scroll-driven story where **the world transforms as you scroll** and **Zara**, the
 Grozara mascot, guides you through it as a physical 3D character you can grab and throw. It
 should feel alive and handmade, never "a bunch of text". Mobile first (most visitors arrive from

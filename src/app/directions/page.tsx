@@ -33,7 +33,7 @@ export default function DirectionsIndex() {
           ))}
           <li>
             <Link
-              href="/"
+              href="/3d"
               className="flex h-full flex-col rounded-3xl bg-forest-deep p-6 text-mist transition hover:-translate-y-0.5 hover:shadow-lg"
             >
               <span className="font-display text-3xl text-lime-bright">3D</span>

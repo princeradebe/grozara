@@ -56,7 +56,7 @@ export function Proof({ items, tone = "light" }: { items: [IconName, string][]; 
   );
 }
 
-/** Floating picker for comparing the directions (and the 3D version at "/"). */
+/** Floating picker for comparing the directions (and the 3D version at "/3d"). */
 export function DirectionSwitcher({ current }: { current: string }) {
   const active = DIRECTIONS.find((d) => d.slug === current);
   return (
@@ -80,7 +80,7 @@ export function DirectionSwitcher({ current }: { current: string }) {
           {d.slug}
         </Link>
       ))}
-      <Link href="/" className="rounded-full px-3 py-2 text-mist/70 hover:text-white">
+      <Link href="/3d" className="rounded-full px-3 py-2 text-mist/70 hover:text-white">
         3D
       </Link>
     </nav>
