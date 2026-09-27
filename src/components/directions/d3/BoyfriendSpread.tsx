@@ -5,19 +5,14 @@ import { StickerCard } from "@/components/mocks/parts";
 import { FEATURES } from "@/content/site";
 
 import styles from "./d3.module.css";
-import { Arrow, GRAPH_PAPER, Kicker, Points, Polaroid, Tape, withSquiggle } from "./scrap";
+import { Arrow, Circled, GRAPH_PAPER, Kicker, Points, Polaroid, Tape, withSquiggle } from "./scrap";
 
 const F = FEATURES.boyfriendMode;
 
 function StepLabel({ n, children }: { n: number; children: string }) {
   return (
     <p className="mt-5 flex items-center justify-center gap-2.5 font-hand text-[28px] leading-none text-forest">
-      <span className="relative grid size-10 place-items-center text-coral">
-        <svg viewBox="0 0 40 40" className="absolute inset-0" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
-          <path d="M22 4 C 8 3, 3 14, 5 23 C 7 33, 20 38, 29 34 C 38 30, 38 15, 31 9 C 26 5, 18 5, 14 8" />
-        </svg>
-        {n}
-      </span>
+      <Circled n={n} className="size-10 text-coral" />
       {children}
     </p>
   );

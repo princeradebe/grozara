@@ -68,7 +68,7 @@ export function GetIt() {
         <h2 className="dir-reveal-zoom font-display text-[clamp(5.5rem,22vw,19rem)] leading-[0.8] tracking-[-0.055em]">Get it.</h2>
         <p className="dir-reveal mt-6 font-display text-[clamp(1.8rem,4vw,3.25rem)] leading-none tracking-[-0.02em]">{SIGN_OFF}</p>
         <p className="dir-reveal mx-auto mt-4 max-w-md text-lg font-medium text-forest/80">{TAGLINE}</p>
-        <StoreBadges height={58} apple="black" className="dir-reveal mt-9 flex flex-col items-center" />
+        <StoreBadges height={58} apple="black" center className="dir-reveal mt-9" />
       </div>
 
       <div aria-hidden className="relative mx-auto mt-14 h-[380px] max-w-5xl sm:h-[440px] lg:mt-16 lg:h-[500px]">
@@ -95,10 +95,10 @@ export function GetIt() {
             </PhoneFrame>
           </div>
         </div>
-        <div className="absolute top-[40px] left-[calc(50%-200px)] z-20 sm:left-[calc(50%-250px)]">
+        <div className="absolute top-[40px] left-[calc(50%-250px)] z-20 hidden sm:block">
           <BuyStamp count={2} size={110} className="dir-pop dir-delay-2" />
         </div>
-        <div className="absolute top-[150px] right-[calc(50%-196px)] z-20 sm:right-[calc(50%-300px)]">
+        <div className="absolute top-[150px] right-[calc(50%-196px)] z-20 sm:top-[320px] sm:right-[calc(50%-300px)]">
           <div className="dir-float-side">
             <LoyaltyCard brand={BRANDS.sunny} width={180} favourite className="rotate-[12deg]" />
           </div>
@@ -122,7 +122,7 @@ export function Footer() {
           <p className="mt-8 max-w-xl font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.95] tracking-[-0.03em]">{TAGLINE}</p>
           <StoreBadges height={52} apple="white" className="mt-10 text-mist" />
         </div>
-        <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3 lg:grid-cols-2">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.title}>
               <p className="text-xs font-bold tracking-[0.16em] text-lime-bright uppercase">{col.title}</p>

@@ -73,9 +73,7 @@ export function FinalCta() {
         <p className="dir-reveal mx-auto mt-6 max-w-xl text-lg leading-relaxed text-mist/75">
           Grozara is in beta right now and coming soon to the App Store and Google Play. Free to use, with optional extras.
         </p>
-        <div className="dir-reveal mt-10 flex justify-center">
-          <StoreBadges apple="white" height={60} className="text-mist" />
-        </div>
+        <StoreBadges apple="white" height={60} center className="dir-reveal mt-10 text-mist" />
       </div>
     </section>
   );

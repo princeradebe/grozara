@@ -46,7 +46,7 @@ export function Hero() {
           every loyalty card, bright and ready at the till.
         </p>
         <div className="dir-rise dir-delay-3 mt-9 flex flex-col items-center gap-7">
-          <StoreBadges apple="white" height={52} className="text-mist" />
+          <StoreBadges apple="white" height={52} center className="text-mist" />
           <Proof tone="dark" items={HIGHLIGHTS} />
         </div>
       </div>

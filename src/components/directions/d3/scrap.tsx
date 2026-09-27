@@ -163,6 +163,18 @@ export function Arrow({
   );
 }
 
+/** A number with a pen circle scribbled round it. Size and colour come from the className. */
+export function Circled({ n, className = "" }: { n: number; className?: string }) {
+  return (
+    <span className={`relative grid place-items-center ${className}`}>
+      <svg viewBox="0 0 40 40" aria-hidden className="absolute inset-0 size-full" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+        <path d="M22 4 C 8 3, 3 14, 5 23 C 7 33, 20 38, 29 34 C 38 30, 38 15, 31 9 C 26 5, 18 5, 14 8" />
+      </svg>
+      {n}
+    </span>
+  );
+}
+
 export function Heart({ className = "", filled = false }: { className?: string; filled?: boolean }) {
   return (
     <svg

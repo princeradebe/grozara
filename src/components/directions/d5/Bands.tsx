@@ -113,7 +113,7 @@ export function BoyfriendBand() {
               <Icon name="camera" className="size-[52px]" />
             </span>
           </div>
-          <div className="absolute top-[0px] right-[4px] z-30">
+          <div className="absolute top-[150px] right-[0px] z-30">
             <BuyStamp count={2} size={150} className="dir-pop dir-delay-3" />
           </div>
           <div className="absolute top-[300px] left-[0px] z-20">
@@ -156,7 +156,7 @@ export function SharedBand() {
               </PhoneFrame>
             </div>
           </div>
-          <div className="absolute top-[150px] left-[0px] z-20">
+          <div className="absolute top-[250px] left-[0px] z-20">
             <div className="dir-float-side">
               <LiveToast person={PEOPLE.thandi} action="ticked off" item="Rolls" className="-rotate-[4deg] scale-[1.12]" />
             </div>

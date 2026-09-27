@@ -40,7 +40,7 @@ export function Hero() {
           anywhere in the house.
         </p>
         <div className="dir-rise dir-delay-2 mt-8 flex justify-center">
-          <StoreBadges className="flex flex-col items-center" />
+          <StoreBadges center />
         </div>
       </div>
 

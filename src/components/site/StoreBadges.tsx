@@ -21,27 +21,29 @@ function Slot({ href, children }: { href: string | null; children: React.ReactNo
 /**
  * The App Store and Google Play badges side by side. `height` is the visible badge height (Apple
  * asks for at least 40px on screen). Until the store links exist the badges aren't links and a
- * "Coming soon" caption sits above them.
+ * "Coming soon" caption sits above them. `center` centres both, including when the badges wrap.
  */
 export function StoreBadges({
   height = 48,
   apple = "black",
   caption = true,
+  center = false,
   className = "",
 }: {
   height?: number;
   apple?: "black" | "white";
   caption?: boolean;
+  center?: boolean;
   className?: string;
 }) {
   const live = STORE_LINKS.appStore !== null && STORE_LINKS.googlePlay !== null;
   const scale = height / GOOGLE.h;
   return (
-    <div className={className}>
+    <div className={`${center ? "text-center" : ""} ${className}`}>
       {caption && !live ? (
         <p className="mb-3 text-xs font-semibold tracking-[0.14em] uppercase opacity-65">Coming soon</p>
       ) : null}
-      <div className="flex flex-wrap items-center" style={{ gap: height * 0.3 }}>
+      <div className={`flex flex-wrap items-center ${center ? "justify-center" : ""}`} style={{ gap: height * 0.3 }}>
         <Slot href={STORE_LINKS.appStore}>
           <Image
             src={`/badges/app-store-${apple}.svg`}

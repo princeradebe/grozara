@@ -129,7 +129,7 @@ export function MiniSwipe() {
 export function MiniTextCopy() {
   return (
     <div className="relative w-full max-w-[220px] -rotate-2">
-      <div className="rounded-[20px] rounded-br-md bg-white p-4 shadow-[0_16px_28px_-18px_rgba(24,54,49,0.7)]">
+      <div className="rounded-[20px] rounded-br-md bg-white px-4 pt-6 pb-4 shadow-[0_16px_28px_-18px_rgba(24,54,49,0.7)]">
         <p className="font-mono text-[11px] leading-[1.7] text-forest/80">
           Weekend shop
           <br />- Eggs × 6

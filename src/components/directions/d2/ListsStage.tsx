@@ -19,7 +19,7 @@ const CHECKS = [
 
 function Check({ c }: { c: (typeof CHECKS)[number] }) {
   return (
-    <div className={`absolute ${c.front ? "z-20" : "z-0 opacity-70"}`} style={{ left: c.x, top: c.y }}>
+    <div className={`absolute ${c.front ? "" : "opacity-70"}`} style={{ left: c.x, top: c.y }}>
       <div className={styles.checkUp} style={{ animationDelay: `${c.delay}s`, animationDuration: `${c.dur}s` }}>
         <GlowCheck size={c.size} />
       </div>
@@ -38,9 +38,12 @@ export function ListsStage() {
 
         <div aria-hidden className="dir-reveal-zoom relative mx-auto h-[600px] w-full max-w-[540px] sm:h-[700px]">
           <Spotlight className="-inset-x-8 -top-24 bottom-0" />
-          {CHECKS.filter((c) => !c.front).map((c) => (
-            <Check key={c.x} c={c} />
-          ))}
+          {/* Below lg the copy sits right above this box, so the rising ticks are clipped to it. */}
+          <div className="absolute inset-0 z-0 max-lg:overflow-hidden">
+            {CHECKS.filter((c) => !c.front).map((c) => (
+              <Check key={c.x} c={c} />
+            ))}
+          </div>
 
           <div className="absolute top-6 left-1/2 z-10 -translate-x-1/2">
             <div className="dir-float">
@@ -52,11 +55,13 @@ export function ListsStage() {
             </div>
           </div>
 
-          {CHECKS.filter((c) => c.front).map((c) => (
-            <Check key={c.x} c={c} />
-          ))}
+          <div className="absolute inset-0 z-20 max-lg:overflow-hidden">
+            {CHECKS.filter((c) => c.front).map((c) => (
+              <Check key={c.x} c={c} />
+            ))}
+          </div>
 
-          <div className="absolute top-[13%] right-0 z-20">
+          <div className="absolute top-0 right-0 z-20 sm:top-[13%]">
             <div className="dir-float-side">
               <span className="flex items-center gap-2 rounded-full bg-forest-deep/85 py-2 pr-4 pl-2 text-sm font-semibold text-label shadow-[0_18px_34px_-18px_rgba(0,0,0,0.8)] ring-1 ring-white/15 backdrop-blur-md">
                 <span className="grid size-7 place-items-center rounded-full bg-amber text-forest">

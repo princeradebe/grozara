@@ -72,7 +72,7 @@ export function HowItWorks() {
       <div className="relative mx-auto max-w-7xl px-6 lg:px-12">
         <div className="dir-reveal mx-auto max-w-2xl text-center">
           <Kicker n="1·2·3" label="Run of show" center />
-          <h2 className="mt-6 font-display text-[2.6rem] leading-[1.02] tracking-tight text-label sm:text-5xl lg:text-6xl">
+          <h2 className="mt-6 font-display text-[2.6rem] leading-[1.02] tracking-tight text-balance text-label sm:text-5xl lg:text-6xl">
             From list to till, <span className="text-lime-bright [text-shadow:0_0_42px_rgba(165,224,99,0.4)]">in three cues.</span>
           </h2>
         </div>

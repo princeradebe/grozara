@@ -20,7 +20,7 @@ export function ListsSection() {
               <ListScreen />
             </Phone>
           </div>
-          <div className="absolute top-[13%] -right-8 rotate-[5deg] sm:-right-28 lg:-right-20 xl:-right-28">
+          <div className="absolute -top-5 -right-8 rotate-[5deg] sm:top-[13%] sm:-right-28 lg:-right-20 xl:-right-28">
             <div className="dir-float-side">
               <Chip icon="pin" tint="bg-amber/20 text-forest" title="Pinned to Home" sub="Your next shop" />
             </div>
@@ -62,7 +62,7 @@ export function BoyfriendModeSection() {
               <BoardScreen />
             </Phone>
           </div>
-          <div className="absolute top-[7%] -right-6 rotate-[4deg] sm:-right-24 lg:-right-16 xl:-right-24">
+          <div className="absolute -top-5 -right-6 rotate-[4deg] sm:top-[7%] sm:-right-24 lg:-right-16 xl:-right-24">
             <Chip icon="sparkles" tint="bg-lime text-white" title="Sticker ready" sub="Lifted from your photo" />
           </div>
           <div className="absolute bottom-[9%] -left-10 origin-bottom-left scale-[0.7] sm:-left-32 sm:scale-100 lg:-left-28 xl:-left-36">
@@ -174,7 +174,7 @@ export function CardsSection() {
               <CardDetailScreen />
             </Phone>
           </div>
-          <div className="absolute top-[6%] -left-6 rotate-[-4deg] sm:-left-28 lg:-left-20 xl:-left-28">
+          <div className="absolute -top-5 -left-6 rotate-[-4deg] sm:-left-28 lg:-left-20 xl:-left-28">
             <Chip icon="card" tint="bg-forest text-lime-bright" title="80 South African templates" sub="Or add any card" />
           </div>
           <div className="absolute -right-2 bottom-[16%] rotate-[4deg] sm:-right-20">

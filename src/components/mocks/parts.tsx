@@ -154,7 +154,7 @@ export function StickerCard({
         <BuyStamp count={buy} size={width * 0.3} className="absolute -right-[6%] -bottom-[6%] z-10" />
       </div>
       <figcaption
-        className="mt-[5px] flex items-start gap-[8px] rounded-[10px] bg-label shadow-[0_3px_6px_-2px_rgba(0,0,0,0.14)]"
+        className="mt-[5px] flex items-start gap-[8px] rounded-[10px] bg-label text-forest shadow-[0_3px_6px_-2px_rgba(0,0,0,0.14)]"
         style={{ padding: width * 0.06 }}
       >
         <CheckCircle checked={checked} size={width * 0.135} />
