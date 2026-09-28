@@ -8,6 +8,7 @@
     "voices": "node --env-file-if-exists=.env scripts/voices.mjs",
     "sound": "node --env-file-if-exists=.env scripts/sound.mjs",
     "master": "node scripts/master.mjs",
+    "share": "node scripts/sync-site-assets.mjs && remotion still Share out/share.png && node scripts/share-image.mjs",
     "studio": "node scripts/sync-site-assets.mjs && remotion studio",
     "render": "node scripts/sync-site-assets.mjs && remotion render Promo out/grozara-30s.mp4",
     "typecheck": "tsc --noEmit"

@@ -24,27 +24,36 @@ export function Kicker({ children, className = "" }: { children: ReactNode; clas
 }
 
 /**
- * A fixed-size mock composition. Everything inside is absolutely placed at its desktop size, and
- * `zoom` (which, unlike `scale`, shrinks the layout box too) fits it on a phone.
+ * A fixed-size mock composition. Everything inside is absolutely placed at its desktop size; on
+ * phones it's scaled down to `mobileScale` inside a box sized to match. A transform rather than
+ * CSS `zoom`: WebKit counts `zoom` into a text field's font size, and iOS zooms the whole page
+ * when you tap a field it thinks is under 16px (the Boyfriend Mode note).
  */
 export function Stage({
   w,
   h,
   children,
   label,
-  className = "[zoom:0.6] sm:[zoom:1]",
+  mobileScale = 0.6,
 }: {
   w: number;
   h: number;
   children: ReactNode;
   /** Set for a stage people can play with: it becomes a labelled group instead of decoration. */
   label?: string;
-  className?: string;
+  mobileScale?: number;
 }) {
   const a11y = label ? { role: "group", "aria-label": label } : { "aria-hidden": true };
+  const box = { "--w": `${w}px`, "--h": `${h}px`, "--sw": `${w * mobileScale}px`, "--sh": `${h * mobileScale}px` } as CSSProperties;
   return (
-    <div {...a11y} className={`relative mx-auto shrink-0 ${className}`} style={{ width: w, height: h }}>
-      {children}
+    <div className="mx-auto h-(--sh) w-(--sw) shrink-0 sm:h-(--h) sm:w-(--w)" style={box}>
+      <div
+        {...a11y}
+        className="relative origin-top-left scale-(--s) sm:scale-100"
+        style={{ width: w, height: h, "--s": mobileScale } as CSSProperties}
+      >
+        {children}
+      </div>
     </div>
   );
 }
