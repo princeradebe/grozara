@@ -124,6 +124,46 @@
 }
 .dir-scan { animation: dir-scan 1.4s ease-in-out infinite; }
 
+/* Back to top (Lime pop). The ring fills with a scroll timeline; without one it stays full. */
+.dir-progress {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+@keyframes dir-progress {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+@supports (animation-timeline: scroll()) {
+  .dir-progress {
+    animation: dir-progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+/* Zara: a gentle bob, a wiggle of the handle on hover, a crouch, then lift-off. */
+@keyframes dir-zara-idle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes dir-zara-handle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-14deg); }
+  75% { transform: rotate(12deg); }
+}
+@keyframes dir-zara-launch {
+  0% { transform: translateY(4px) scale(1.2, 0.78); }
+  18% { transform: translateY(-14px) scale(0.86, 1.22); }
+  100% { transform: translateY(-120vh) scale(0.8, 1.32); }
+}
+@keyframes dir-zara-trail {
+  0% { opacity: 0.95; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(46px) scale(0.3); }
+}
+.dir-zara-idle { animation: dir-zara-idle 2.4s ease-in-out infinite; }
+.group:hover .dir-zara-handle { animation: dir-zara-handle 0.6s ease-in-out; }
+.dir-zara-crouch { transform: translateY(4px) scale(1.2, 0.78); transition: transform 0.16s ease-out; }
+.dir-zara-launch { animation: dir-zara-launch 0.95s cubic-bezier(0.55, 0, 0.8, 0.4) forwards; }
+.dir-zara-trail { animation: dir-zara-trail 0.7s ease-out both; }
+
 /* The Lime pop FAQ. <details name> makes it one-open-at-a-time; this is the motion: the panel's
    height eases open, the answer rises in out of a blur, and the rest of the list steps back.
    Browsers without ::details-content still get everything but the height easing. */
@@ -164,7 +204,9 @@
   .faq-answer {
     transition: none;
   }
-  .dir-scan {
+  .dir-scan,
+  .dir-zara-idle,
+  .group:hover .dir-zara-handle {
     animation: none;
   }
 }
