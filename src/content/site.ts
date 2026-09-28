@@ -23,7 +23,7 @@ export const NAV_LINKS = [
 /** Short proof points for hero chips and strips. */
 export const HIGHLIGHTS: [IconName, string][] = [
   ["userGroup", "Shared lists, live"],
-  ["card", "80 SA card templates"],
+  ["card", "80+ SA card templates"],
   ["faceId", "Face ID lock"],
 ];
 
@@ -44,7 +44,7 @@ export const FEATURES = {
     points: [
       ["pin", "Pin your next shop to Home"],
       ["tick", "Tick, swipe, undo"],
-      ["share", "Send a text copy to anyone"],
+      ["share", "Share your list with anyone"],
     ],
   },
   boyfriendMode: {
@@ -62,7 +62,7 @@ export const FEATURES = {
     id: "shared",
     eyebrow: "Shared lists",
     title: "Shop together, live.",
-    body: "Share a list with friends and family. When someone's at the shop, everyone watches items get ticked off as it happens, and anything you add from home lands on their phone straight away.",
+    body: "Share a list with friends and family. When someone's at the shop, everyone watches items get ticked off as it happens, and anything you add lands on their phone straight away.",
     points: [
       ["userGroup", "One list for the whole household"],
       ["cart", "Live shopping: see every tick as it happens"],
@@ -73,10 +73,10 @@ export const FEATURES = {
     id: "cards",
     eyebrow: "Loyalty cards",
     title: "Every card, ready at the till.",
-    body: "Templates for 80 South African programmes. Scan a barcode, import a screenshot or type the number. Your cards stack like a wallet, and the screen brightens when it's time to scan.",
+    body: "Templates for 80+ South African loyalty programmes. Scan a barcode, import a screenshot or type the number. Your cards stack like a wallet, and the screen brightens when it's time to scan.",
     points: [
       ["barcode", "Scan, import or type it in"],
-      ["card", "80 South African templates"],
+      ["card", "80+ South African templates"],
       ["sun", "Brightens at the till"],
     ],
   },
@@ -103,7 +103,7 @@ export const FAQS: { q: string; a: string }[] = [
   { q: "Is Grozara free?", a: "Yes. Grozara is free to use, with optional extras." },
   {
     q: "What is Boyfriend Mode?",
-    a: "A photo list for whoever is doing the shop. Snap what you need, Grozara turns it into a sticker, and you add how many to buy, a note and where to find it. No more guessing which one you meant.",
+    a: "A photo list for whoever is doing the shopping. Snap what you need, Grozara turns it into a sticker, and you add how many items to buy, a note and where to find it. No more guessing.",
   },
   {
     q: "How do shared lists work?",
@@ -111,7 +111,7 @@ export const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Which loyalty cards can I add?",
-    a: "Grozara has templates for 80 South African programmes. You can add any other card too: scan its barcode, import a screenshot of it or type the number.",
+    a: "Grozara has templates for 80+ South African programmes. You can add any other card too: scan its barcode, import a screenshot of it or type the number.",
   },
   { q: "Can I add photos from WhatsApp?", a: "Yes. Share a photo from WhatsApp, Photos or any other app and pick the Boyfriend Mode list it belongs on." },
   { q: "Can I lock the app?", a: "Yes. Turn on the app lock and Grozara opens with Face ID." },

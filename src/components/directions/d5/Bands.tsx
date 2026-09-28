@@ -135,7 +135,11 @@ export function CardsBand() {
           <LoyaltyCard brand={BRANDS.sunny} width={250} favourite className="absolute right-[0px] bottom-[70px] z-20 rotate-[8deg]" />
           <div className="absolute bottom-[36px] left-[0px] z-20 -rotate-[7deg]">
             <div className="grid size-[180px] content-center rounded-[36px] bg-amber px-6 text-forest shadow-[0_24px_40px_-18px_rgba(0,0,0,0.7)]">
-              <span className="font-display text-[92px] leading-[0.8] tracking-[-0.04em]">{count}</span>
+              {/* A full-size "80+" is wider than the badge, so the plus rides small at the top. */}
+              <span className="font-display text-[92px] leading-[0.8] tracking-[-0.04em]">
+                {count.replace(/\+$/, "")}
+                {count.endsWith("+") ? <span className="ml-0.5 align-top text-[0.5em] leading-none">+</span> : null}
+              </span>
               <span className="mt-2 font-display text-lg leading-tight">{rest.join(" ")}</span>
             </div>
           </div>

@@ -47,16 +47,23 @@ export function EggLogo() {
 
   return (
     <div className="relative inline-block">
+      {/* Quick taps are the whole point, so switch off what browsers do with them: a double or
+          triple click selects the nearest text (the tagline below), a slight drag picks the image up
+          and cancels the click, and on iPhone a double tap zooms. */}
       <button
         type="button"
         onClick={tap}
+        onMouseDown={(event) => {
+          if (event.detail > 1) event.preventDefault();
+        }}
         aria-label="Grozara"
-        className="block cursor-pointer select-none [-webkit-tap-highlight-color:transparent]"
+        className="block cursor-pointer touch-manipulation select-none [-webkit-tap-highlight-color:transparent]"
       >
         <Image
           key={boing}
           src="/brand/grozara-logo-white.svg"
           alt=""
+          draggable={false}
           width={286}
           height={64}
           className={`h-10 w-auto origin-bottom-left ${boing ? "dir-logo-boing" : ""}`}
