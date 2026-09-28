@@ -26,7 +26,7 @@ const TILES: { tone: string; tilt: string; art: ReactNode; play?: string }[] = [
       </div>
     ),
   },
-  { tone: "bg-amber text-forest", tilt: "lg:-rotate-[1.5deg]", art: <FavouritesTileArt />, play: "Try it: tap a card to make it your favourite" },
+  { tone: "bg-amber text-forest", tilt: "lg:-rotate-[1.5deg]", art: <FavouritesTileArt />, play: "Try it: tap a star to favourite a card, tap a card to bring it forward" },
   { tone: "bg-forest text-mist", tilt: "lg:rotate-[2.5deg]", art: <ClearTileArt />, play: "Try it: tick items, then clear them" },
 ];
 

@@ -63,18 +63,30 @@ export const BRANDS = {
   sunny: { name: "Sunny Pantry", from: "#FFC93C", to: "#F08A12", accent: "#FFF1C2", digits: "2208", glyph: "sun" },
 } satisfies Record<string, CardBrand>;
 
-/** A loyalty card face, drawn like the app's card art: gradient, a disc and a ring. */
+/**
+ * A loyalty card face, drawn like the app's card art: gradient, a disc and a ring. A favourite wears
+ * the app's filled green star; with `onToggleFavourite` the star becomes a toggle (outline when off).
+ */
 export function LoyaltyCard({
   brand,
   width = 320,
   favourite = false,
+  onToggleFavourite,
   className = "",
 }: {
   brand: CardBrand;
   width?: number;
   favourite?: boolean;
+  onToggleFavourite?: () => void;
   className?: string;
 }) {
+  const star = (
+    <Icon
+      key={favourite ? "on" : "off"}
+      name={favourite ? "starFill" : "star"}
+      className={`size-[1.1em] drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)] ${favourite ? "text-lime" : "text-white/75"} ${onToggleFavourite && favourite ? "dir-pop" : ""}`}
+    />
+  );
   const height = width * 0.63;
   return (
     <div
@@ -103,7 +115,19 @@ export function LoyaltyCard({
             <Icon name={brand.glyph} className="size-[1.1em]" />
             {brand.name}
           </span>
-          {favourite ? <Icon name="star" className="size-[1.1em] text-amber" /> : null}
+          {onToggleFavourite ? (
+            <button
+              type="button"
+              onClick={onToggleFavourite}
+              aria-pressed={favourite}
+              aria-label={`Favourite ${brand.name}`}
+              className="pointer-events-auto -m-[0.4em] cursor-pointer rounded-full p-[0.4em] transition-transform hover:scale-110 active:scale-90"
+            >
+              {star}
+            </button>
+          ) : favourite ? (
+            star
+          ) : null}
         </div>
         <span className="font-mono tracking-[0.18em] text-white/90" style={{ fontSize: width * 0.048 }}>
           •••• {brand.digits}

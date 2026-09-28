@@ -457,37 +457,66 @@ export function ShareTileArt() {
 const FAVOURITE_CARDS = ["corner", "leaf", "sunny"] as const;
 type FavouriteCard = (typeof FAVOURITE_CARDS)[number];
 
-/** Favourites on Home: tap a card to make it the favourite; it comes to the front wearing the star. */
+/**
+ * Favourites on Home: tap a card's star to favourite it (as many as you like; the badge counts
+ * them), and tap the card itself to bring it to the front.
+ */
 export function FavouritesTileArt() {
-  const [favourite, setFavourite] = useState<FavouriteCard>("leaf");
-  const others = FAVOURITE_CARDS.filter((card) => card !== favourite);
+  const [front, setFront] = useState<FavouriteCard>("leaf");
+  const [favourites, setFavourites] = useState<ReadonlySet<FavouriteCard>>(() => new Set(["leaf"]));
+  const others = FAVOURITE_CARDS.filter((card) => card !== front);
   const slot = (card: FavouriteCard) =>
-    card === favourite
+    card === front
       ? { left: "50%", top: 58, x: "-50%", rotate: -3, z: 3, width: 196 }
       : card === others[0]
-        ? { left: "0%", top: 0, x: "0%", rotate: -9, z: 1, width: 170 }
-        : { left: "100%", top: 8, x: "-100%", rotate: 8, z: 2, width: 170 };
+        ? { left: "0%", top: 0, x: "0%", rotate: -9, z: 2, width: 170 }
+        : { left: "100%", top: 8, x: "-100%", rotate: 8, z: 1, width: 170 };
+  const toggle = (card: FavouriteCard) =>
+    setFavourites((set) => {
+      const next = new Set(set);
+      if (next.has(card)) next.delete(card);
+      else next.add(card);
+      return next;
+    });
   return (
     <div className="relative h-full">
       {FAVOURITE_CARDS.map((card) => {
         const s = slot(card);
         const brand = BRANDS[card];
         return (
-          <button
+          <div
             key={card}
-            type="button"
-            onClick={() => setFavourite(card)}
-            aria-pressed={card === favourite}
-            aria-label={`Make ${brand.name} a favourite`}
-            className="absolute cursor-pointer transition-[left,top,transform] duration-500 ease-[cubic-bezier(0.3,1.3,0.4,1)] hover:brightness-105"
+            className="absolute transition-[left,top,transform] duration-500 ease-[cubic-bezier(0.3,1.3,0.4,1)]"
             style={{ left: s.left, top: s.top, zIndex: s.z, transform: `translateX(${s.x}) rotate(${s.rotate}deg)` }}
           >
-            <LoyaltyCard brand={brand} width={s.width} favourite={card === favourite} className="transition-[width,height] duration-500" />
-          </button>
+            {/* The card brings itself forward; its star (a button inside the card) is the favourite toggle. */}
+            <button
+              type="button"
+              onClick={() => setFront(card)}
+              aria-label={`Bring ${brand.name} to the front`}
+              className="absolute inset-0 cursor-pointer rounded-[8%]"
+            />
+            <LoyaltyCard
+              brand={brand}
+              width={s.width}
+              favourite={favourites.has(card)}
+              onToggleFavourite={() => toggle(card)}
+              className="pointer-events-none"
+            />
+          </div>
         );
       })}
-      <span key={favourite} className="dir-pop absolute -top-2 right-2 z-10 grid size-[52px] place-items-center rounded-full bg-forest text-amber" style={tilt(8)}>
-        <Icon name="star" className="size-[26px]" />
+      {/* Bottom right: the only corner no card's star ever sits under. */}
+      <span className="absolute -right-1 -bottom-2 z-10 grid size-[52px] place-items-center rounded-full bg-forest text-amber" style={tilt(8)}>
+        <Icon name={favourites.size ? "starFill" : "star"} className="size-[26px]" />
+        <span
+          key={favourites.size}
+          aria-live="polite"
+          className="dir-pop absolute -top-1.5 -right-1.5 grid size-6 place-items-center rounded-full bg-lime text-xs font-bold text-forest ring-2 ring-amber"
+        >
+          {favourites.size}
+          <span className="sr-only"> on Home</span>
+        </span>
       </span>
     </div>
   );
