@@ -53,8 +53,7 @@ function Hero() {
             ))}
           </h1>
           <p className="dir-rise dir-delay-5 mt-8 max-w-md text-lg leading-relaxed font-medium text-forest/80">
-            Grozara is your shopping list, your Boyfriend Mode photo list and your loyalty card wallet. Share a list with the
-            household and watch it get ticked off, live. One app, made for South African shops.
+            Grozara is your shopping list and your loyalty card wallet. Shopping, sorted.
           </p>
           <div className="dir-rise dir-delay-6 mt-8">
             <StoreBadges height={52} />

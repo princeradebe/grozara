@@ -1,15 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { type CSSProperties, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type MouseEvent, useEffect, useRef, useState } from "react";
 
 import { Icon } from "@/components/mocks/Icon";
 
 import { ZaraMark } from "./ZaraMark";
 
-// The footer's easter egg: tap the logo four times in quick succession and the giant wordmark
-// throws a party. The logo announces it with a window event so the two halves of the footer stay
-// separate islands.
+// The footer's easter egg: tap the footer logo or the giant wordmark four times in quick succession
+// and the wordmark throws a party. Both count towards the same streak, and the party is announced
+// with a window event so the two halves of the footer stay separate islands.
 
 const PARTY = "grozara:party";
 const CLICKS = 4;
@@ -19,47 +19,78 @@ const PARTY_MS = 3800;
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/** The footer logo. Each tap gives a little boing; the fourth quick one sets the party off. */
+let streak = { taps: 0, last: 0 };
+
+function countTap() {
+  const now = performance.now();
+  streak = { taps: now - streak.last < WINDOW_MS ? streak.taps + 1 : 1, last: now };
+  if (streak.taps < CLICKS) return;
+  streak = { taps: 0, last: 0 };
+  window.dispatchEvent(new Event(PARTY));
+}
+
+const BOING: Keyframe[] = [
+  { transform: "none" },
+  { transform: "scale(1.12, 0.82)", offset: 0.3 },
+  { transform: "scale(0.94, 1.08)", offset: 0.62 },
+  { transform: "none" },
+];
+
+/** A squash-and-stretch per tap. A Web Animation restarts on every call without remounting anything. */
+function boing(el: Element | null) {
+  if (!el || reducedMotion()) return;
+  el.animate(BOING, { duration: 420, easing: "cubic-bezier(0.3, 1.4, 0.5, 1)" });
+}
+
+/**
+ * Quick taps are the whole point, so switch off what browsers do with them: a double or triple
+ * click selects the nearest text, and on iPhone a double tap zooms (hence touch-manipulation on
+ * both buttons).
+ */
+function keepMultiClickFromSelecting(event: MouseEvent) {
+  if (event.detail > 1) event.preventDefault();
+}
+
+/** The footer logo. Each tap gives a little boing, and it shows the "found it" bubble when the party starts. */
 export function EggLogo() {
-  const [taps, setTaps] = useState(0);
-  const [boing, setBoing] = useState(0);
   const [found, setFound] = useState(0);
-  const last = useRef(0);
-  const hideBubble = useRef<number | undefined>(undefined);
+  const logo = useRef<HTMLImageElement>(null);
 
-  useEffect(() => () => window.clearTimeout(hideBubble.current), []);
-
-  const tap = () => {
-    const now = performance.now();
-    const count = now - last.current < WINDOW_MS ? taps + 1 : 1;
-    last.current = now;
-    setBoing((b) => b + 1);
-    if (count < CLICKS) {
-      setTaps(count);
-      return;
-    }
-    setTaps(0);
-    setFound((f) => f + 1);
-    window.dispatchEvent(new Event(PARTY));
-    window.clearTimeout(hideBubble.current);
-    hideBubble.current = window.setTimeout(() => setFound(0), PARTY_MS);
-  };
+  useEffect(() => {
+    let timer: number | undefined;
+    const celebrate = () => {
+      setFound((f) => f + 1);
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setFound(0), PARTY_MS);
+    };
+    window.addEventListener(PARTY, celebrate);
+    return () => {
+      window.removeEventListener(PARTY, celebrate);
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <div className="relative inline-block">
       <button
         type="button"
-        onClick={tap}
+        onClick={() => {
+          boing(logo.current);
+          countTap();
+        }}
+        onMouseDown={keepMultiClickFromSelecting}
         aria-label="Grozara"
-        className="block cursor-pointer select-none [-webkit-tap-highlight-color:transparent]"
+        className="block cursor-pointer touch-manipulation select-none [-webkit-tap-highlight-color:transparent]"
       >
+        {/* Not draggable: a slight drag between quick clicks would pick the image up and cancel the click. */}
         <Image
-          key={boing}
+          ref={logo}
           src="/brand/grozara-logo-white.svg"
           alt=""
+          draggable={false}
           width={286}
           height={64}
-          className={`h-10 w-auto origin-bottom-left ${boing ? "dir-logo-boing" : ""}`}
+          className="h-10 w-auto origin-bottom-left"
         />
       </button>
       {found ? (
@@ -122,7 +153,11 @@ function Faller({ item }: { item: Item }) {
   );
 }
 
-/** The giant footer wordmark. On a party its letters jelly-bounce and a shower of the site lands on them. */
+/**
+ * The giant footer wordmark. It counts taps too, since it's the logo most people try, and each tap
+ * squashes the letter under it. On a party its letters jelly-bounce and a shower of the site lands
+ * on them.
+ */
 export function PartyWordmark() {
   const [party, setParty] = useState<{ id: number; items: Item[] } | null>(null);
 
@@ -150,17 +185,28 @@ export function PartyWordmark() {
           ))}
         </div>
       ) : null}
-      <p className="-mb-[0.2em] text-center font-display text-[25vw] leading-[0.9] tracking-[-0.055em] whitespace-nowrap text-lime">
+      {/* Out of the tab order: the footer logo is the keyboard way in. */}
+      <button
+        type="button"
+        tabIndex={-1}
+        onClick={(event) => {
+          boing((event.target as Element).closest("[data-letter]") ?? event.currentTarget);
+          countTap();
+        }}
+        onMouseDown={keepMultiClickFromSelecting}
+        className="-mb-[0.2em] block w-full origin-bottom cursor-pointer touch-manipulation text-center font-display text-[25vw] leading-[0.9] tracking-[-0.055em] whitespace-nowrap text-lime select-none [-webkit-tap-highlight-color:transparent]"
+      >
         {"Grozara".split("").map((letter, i) => (
           <span
             key={`${party?.id ?? 0}-${i}`}
+            data-letter
             className={`inline-block origin-bottom ${party ? "dir-letter-bounce" : ""}`}
             style={{ animationDelay: `${i * 0.075}s`, "--party": LETTER_COLOURS[i] } as CSSProperties}
           >
             {letter}
           </span>
         ))}
-      </p>
+      </button>
     </div>
   );
 }
