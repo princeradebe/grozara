@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { AbsoluteFill, Easing, useCurrentFrame, useVideoConfig } from "remotion";
 
 import { lerp, ramp, slam, wobble } from "./anim";
-import { PUSH } from "./timeline";
+import { FPS, PUSH, type Scene } from "./timeline";
 
 /** Four-point sparkle, the marquee separator from the site's Lime pop direction. */
 export function Spark({ size, className = "", style }: { size: number; className?: string; style?: CSSProperties }) {
@@ -117,50 +117,33 @@ export function Verb({ text, at, className = "", style }: { text: string; at: nu
 }
 
 /**
- * Zara's speech bubble, doubling as captions for sound-off viewing. Words appear in step with the
- * line's progress; the first `lead` words (the verb) are picked out in colour.
+ * Captions for sound-off viewing: the line in a card near the bottom of the frame, each word
+ * lighting up as it's spoken. Caption words and transcript words don't pair one to one ("80+" is
+ * heard as "80 plus"), so each caption word takes the time of the transcript word at the same
+ * point through the line. The first `lead` words (the verb) are picked out in colour.
  */
-export function Bubble({
-  text,
-  at,
-  frames,
-  side,
-  lead = 0,
-  style,
-}: {
-  text: string;
-  at: number;
-  frames: number;
-  side: "left" | "right";
-  lead?: number;
-  style?: CSSProperties;
-}) {
+export function Caption({ s, lead = 0 }: { s: Scene; lead?: number }) {
   const frame = useCurrentFrame();
-  const words = text.split(" ");
-  const shown = Math.ceil(words.length * Math.min(1, Math.max(0, (frame - at + 3) / (frames * 0.92))));
-  const enter = slam(frame, at - 4);
-  if (frame < at - 4) return null;
+  const words = s.text.split(" ");
+  const heard = s.words;
+  const startOf = (i: number) =>
+    heard.length > 0
+      ? s.voiceAt + Math.round(heard[Math.floor((i * heard.length) / words.length)].start * FPS)
+      : s.voiceAt + Math.round((i / words.length) * s.voiceFrames * 0.92);
+  const enter = slam(frame, s.voiceAt - 4);
+  if (frame < s.voiceAt - 4) return null;
   return (
     <div
-      className="absolute max-w-[640px] rounded-[44px] bg-label px-10 py-8 text-forest shadow-[0_30px_50px_-24px_rgba(13,33,29,0.7)]"
-      style={{
-        ...style,
-        transformOrigin: side === "left" ? "12% 100%" : "88% 100%",
-        transform: `scale(${lerp(0.4, 1, enter)}) rotate(${side === "left" ? -2 : 2}deg)`,
-        opacity: Math.min(1, enter * 2),
-      }}
+      className="absolute inset-x-0 top-[1540px] flex justify-center px-[48px]"
+      style={{ opacity: Math.min(1, enter * 2), transform: `translateY(${(1 - enter) * 70}px)` }}
     >
-      <p className="font-display text-[50px] leading-[1.08] tracking-[-0.015em]">
+      <p className="rounded-[40px] bg-label px-11 py-7 text-center font-display text-[50px] leading-[1.1] tracking-[-0.015em] text-forest shadow-[0_30px_50px_-24px_rgba(13,33,29,0.7)]">
         {words.map((word, i) => (
-          <span key={i} className={i < lead ? "text-coral" : ""} style={{ opacity: i < shown ? 1 : 0.12 }}>
+          <span key={i} className={i < lead ? "text-coral" : ""} style={{ opacity: frame >= startOf(i) - 2 ? 1 : 0.14 }}>
             {word}{" "}
           </span>
         ))}
       </p>
-      <span
-        className="absolute -bottom-7 size-16 rotate-45 rounded-[10px] bg-label"
-        style={side === "left" ? { left: 64 } : { right: 64 }}
-      />
     </div>
   );
 }

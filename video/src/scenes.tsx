@@ -9,7 +9,7 @@ import { StoreBadges } from "@/components/site/StoreBadges";
 import { SIGN_OFF, TICKER } from "@/content/site";
 
 import { bob, lerp, pop, ramp, slam, wobble } from "./anim";
-import { Band, Bubble, Spark, Verb } from "./kit";
+import { Band, Caption, Spark, Verb } from "./kit";
 import { CUES, cue, STAMP_DELAY, type Scene } from "./timeline";
 
 const turn = (n: number) => [...TICKER.slice(n), ...TICKER.slice(0, n)];
@@ -56,49 +56,86 @@ function Tick({ size }: { size: number }) {
   );
 }
 
-// ——— 1 · Howzit ———————————————————————————————————————————————————————————————
+// ——— 1 · Meet Grozara ————————————————————————————————————————————————————————
+
+/** The full logo's proportions, and where its icon tile ends (the wordmark follows it). */
+const LOGO_ASPECT = 305 / 79;
+const TILE_END = 76 / 305;
+
+/**
+ * The full logo, as drawn: the icon lands, then the wordmark wipes out from behind it. Nothing
+ * glows or sparkles around it, and it never shares a screen with the icon on its own.
+ */
+function Logo({ at, revealAt, width }: { at: number; revealAt: number; width: number }) {
+  const frame = useCurrentFrame();
+  const land = pop(frame, at, 10);
+  const shown = lerp(TILE_END, 1, ramp(frame, revealAt, revealAt + 12));
+  return (
+    <Img
+      src={staticFile("logo/grozara-logo.svg")}
+      style={{
+        width,
+        height: width / LOGO_ASPECT,
+        opacity: frame < at ? 0 : Math.min(1, land * 2),
+        clipPath: `inset(0 ${(1 - shown) * 100}% 0 0)`,
+        transform: `scale(${lerp(0.7, 1, land)})`,
+        transformOrigin: `${(TILE_END / 2) * 100}% 50%`,
+      }}
+    />
+  );
+}
+
+const WALLET = [BRANDS.basket, BRANDS.sunny, BRANDS.leaf];
 
 export function Hello({ s }: { s: Scene }) {
   const frame = useCurrentFrame();
-  const nameAt = cue(s, CUES.hello.name);
   const logoAt = cue(s, CUES.hello.logo);
-  const name = pop(frame, nameAt);
-  const logo = pop(frame, logoAt, 9);
+  const listAt = cue(s, CUES.hello.list);
+  const cardsAt = cue(s, CUES.hello.cards);
+  const list = pop(frame, listAt, 13);
+  const cards = pop(frame, cardsAt, 12);
   return (
-    <Band className="bg-lime text-forest" entrance={false} hits={[s.voiceAt + 1]}>
-      <Glow color="rgba(200,245,140,0.95)" x={760} y={700} size={1500} />
-      <Sparkles seed="hello" color="text-label" />
-      <div className="absolute top-[230px] flex w-full justify-center">
-        <Verb text="Howzit!" at={s.voiceAt - 3} className="text-[250px] text-forest" />
+    <Band className="bg-lime text-forest" entrance={false} hits={[listAt + 3]}>
+      <div className="absolute top-[300px] flex w-full justify-center">
+        <Logo at={0} revealAt={logoAt - 6} width={880} />
       </div>
-      <div className="absolute top-[560px] flex w-full justify-center">
-        <Img
-          src={staticFile("site/brand/grozara-logo.svg")}
-          className="h-[132px] w-auto"
-          style={{ opacity: Math.min(1, logo * 2), transform: `scale(${lerp(2.2, 1, logo)}) rotate(${(1 - logo) * -12}deg)` }}
-        />
-      </div>
-      <At x={96} y={880}>
-        <div style={{ opacity: Math.min(1, name * 2), transform: `scale(${name}) rotate(-8deg)`, transformOrigin: "80% 80%" }}>
-          <p className="font-hand text-[92px] leading-none text-forest">I&rsquo;m Zara!</p>
-          <svg viewBox="0 0 160 100" className="mt-2 ml-44 w-40 text-coral" aria-hidden>
-            <path d="M6 10 C 60 8, 112 28, 136 80" fill="none" stroke="currentColor" strokeWidth={9} strokeLinecap="round" />
-            <path d="M116 66 L 137 82 L 142 57" fill="none" stroke="currentColor" strokeWidth={9} strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+      <At x={60} y={600}>
+        <div style={{ opacity: frame < listAt ? 0 : 1, transform: `translateY(${(1 - list) * 900}px) rotate(${-6 + (1 - list) * -10}deg)` }}>
+          <PhoneFrame scale={0.9}>
+            <ListScreen />
+          </PhoneFrame>
         </div>
       </At>
+      {WALLET.map((brand, i) => (
+        <At key={brand.name} x={470} y={900}>
+          <div
+            style={{
+              opacity: frame < cardsAt ? 0 : 1,
+              transformOrigin: "20% 110%",
+              transform: `rotate(${lerp(0, -8 + i * 11, cards)}deg) translateX(${(1 - cards) * 700}px)`,
+            }}
+          >
+            <LoyaltyCard brand={brand} width={480} />
+          </div>
+        </At>
+      ))}
+      <Caption s={s} />
     </Band>
   );
 }
 
 // ——— 2 · List it ——————————————————————————————————————————————————————————————
 
+/** Two items from the list mock that aren't ticked yet. */
+const PICKS = ["Boerewors", "Rooibos tea"];
+
 export function List({ s }: { s: Scene }) {
   const frame = useCurrentFrame();
   const phone = pop(frame, s.voiceAt, 13);
   const tickAt = cue(s, CUES.list.tick);
+  const tickAgainAt = cue(s, CUES.list.tickAgain);
   const tick = pop(frame, tickAt, 8);
-  const toast = slam(frame, cue(s, CUES.list.toast));
+  const picks = [cue(s, CUES.list.pick), cue(s, CUES.list.pickAgain)];
   return (
     <Band
       className="bg-forest text-mist"
@@ -119,21 +156,33 @@ export function List({ s }: { s: Scene }) {
       <At x={120} y={640}>
         <div
           className="grid place-items-center rounded-full bg-lime text-forest shadow-[0_24px_40px_-16px_rgba(0,0,0,0.6)]"
-          style={{ width: 230, height: 230, transform: `scale(${tick}) rotate(${(1 - tick) * -40 + wobble(frame, tickAt) * 6}deg)` }}
+          style={{
+            width: 230,
+            height: 230,
+            transform: `scale(${tick * (1 + wobble(frame, tickAgainAt) * 0.12)}) rotate(${(1 - tick) * -40 + (wobble(frame, tickAt) + wobble(frame, tickAgainAt)) * 6}deg)`,
+          }}
         >
           <Tick size={230} />
         </div>
       </At>
-      <At x={60} y={1010}>
-        <div
-          className="flex items-center gap-6 rounded-full bg-label py-4 pr-4 pl-9 text-[40px] font-semibold text-forest shadow-[0_24px_40px_-18px_rgba(0,0,0,0.7)]"
-          style={{ transform: `translateX(${(1 - toast) * -700}px) rotate(-3deg)` }}
-        >
-          Tomatoes deleted
-          <span className="rounded-full bg-forest px-7 py-3 font-bold text-lime-bright">Undo</span>
-        </div>
-      </At>
-      <Bubble text={s.text} at={s.voiceAt} frames={s.voiceFrames} side="left" lead={2} style={{ left: 330, top: 1290 }} />
+      {/* "Yep, I want this… and this": each item lands ticked on its word. */}
+      {PICKS.map((item, i) => {
+        const t = slam(frame, picks[i]);
+        return (
+          <At key={item} x={60} y={1000 + i * 150}>
+            <div
+              className="flex items-center gap-5 rounded-full bg-label py-4 pr-11 pl-4 text-[46px] font-semibold text-forest shadow-[0_24px_40px_-18px_rgba(0,0,0,0.7)]"
+              style={{ opacity: frame < picks[i] ? 0 : 1, transform: `translateX(${(1 - t) * -700}px) rotate(${i ? 2 : -3}deg)` }}
+            >
+              <span className="grid size-[70px] place-items-center rounded-full bg-lime text-forest">
+                <Tick size={70} />
+              </span>
+              {item}
+            </div>
+          </At>
+        );
+      })}
+      <Caption s={s} lead={2} />
     </Band>
   );
 }
@@ -222,7 +271,7 @@ export function Snap({ s }: { s: Scene }) {
         </div>
       </At>
       <AbsoluteFill className="bg-white" style={{ opacity: flash }} />
-      <Bubble text={s.text} at={s.voiceAt} frames={s.voiceFrames} side="right" lead={2} style={{ right: 300, top: 1290 }} />
+      <Caption s={s} lead={2} />
     </Band>
   );
 }
@@ -285,7 +334,7 @@ export function Share({ s }: { s: Scene }) {
           </span>
         </div>
       </At>
-      <Bubble text={s.text} at={s.voiceAt} frames={s.voiceFrames} side="left" lead={2} style={{ left: 330, top: 1290 }} />
+      <Caption s={s} lead={2} />
     </Band>
   );
 }
@@ -339,85 +388,103 @@ export function Scan({ s }: { s: Scene }) {
           className="grid size-[230px] place-items-center rounded-full bg-amber text-center text-forest shadow-[0_20px_36px_-14px_rgba(0,0,0,0.7)]"
           style={{ transform: `scale(${badge}) rotate(${-12 + bob(frame, 60) * 4}deg)` }}
         >
-          <span className="font-display text-[96px] leading-none">80</span>
+          <span className="font-display text-[96px] leading-none">80+</span>
           <span className="-mt-12 text-[24px] font-bold tracking-[0.12em] uppercase">SA cards</span>
         </div>
       </At>
-      <Bubble text={s.text} at={s.voiceAt} frames={s.voiceFrames} side="right" lead={2} style={{ right: 300, top: 1290 }} />
+      <Caption s={s} lead={2} />
     </Band>
   );
 }
 
 // ——— 6 · Shopping, sorted ————————————————————————————————————————————————————
 
-const CONFETTI = ["rice", "tuna", "basket", "leaf", "sunny", "corner", "spark", "spark", "rice", "tuna", "spark", "corner"] as const;
+/** Photo stickers in the haul and how wide each falls. Oros, oil and plates went through the app's own sticker cutout. */
+const STICKERS = {
+  rice: ["site/stickers/rice.png", 190],
+  tuna: ["site/stickers/tuna.png", 190],
+  oros: ["stickers/oros.png", 120],
+  oil: ["stickers/oil.png", 150],
+  plates: ["stickers/plates.png", 240],
+} as const;
+
+const isSticker = (kind: string): kind is keyof typeof STICKERS => kind in STICKERS;
+
+/** The haul: a braai shop and a few loyalty cards. */
+const CONFETTI = [
+  "oros", "rice", "basket", "plates", "tuna", "leaf", "oil", "spark",
+  "sunny", "oros", "plates", "corner", "rice", "oil", "spark", "tuna",
+] as const;
+
+/** Where something dropped `t` frames ago is: it falls, bounces twice on its floor and settles. */
+function dropped(t: number, floor: number) {
+  let y = -320;
+  let v = 6;
+  for (let f = 0; f < t; f++) {
+    v += 2.4;
+    y += v;
+    if (y > floor) {
+      y = floor;
+      v = Math.abs(v) < 6 ? 0 : -v * 0.32;
+    }
+  }
+  return y;
+}
 
 export function Outro({ s }: { s: Scene }) {
   const frame = useCurrentFrame();
-  const icon = pop(frame, s.voiceAt - 2, 9);
-  const logo = pop(frame, s.voiceAt + 6, 11);
   const sortedAt = cue(s, CUES.outro.sorted);
-  const lekkerAt = cue(s, CUES.outro.lekker);
+  const comingAt = cue(s, CUES.outro.coming);
   const badgesAt = cue(s, CUES.outro.badges);
-  const lekker = pop(frame, lekkerAt, 8);
+  const coming = pop(frame, comingAt, 10);
   const badges = pop(frame, badgesAt, 12);
+  // The shower starts with "Shopping", so it rains for the whole end card.
+  const rainAt = sortedAt + 4;
   return (
-    <Band
-      className="bg-lime text-forest"
-      hits={[sortedAt + 3, lekkerAt + 2]}
-      ticker={{ words: turn(4), bar: "bg-forest-deep", ink: "text-lime-bright", spark: "text-amber" }}
-    >
-      <Glow color="rgba(200,245,140,0.95)" x={540} y={620} size={1500} />
-      <Sparkles seed="outro" color="text-label" />
-      {frame >= lekkerAt
-        ? CONFETTI.map((kind, i) => {
-            const t = frame - lekkerAt - i * 6;
-            if (t < 0) return null;
-            const x = random(`cx${i}`) * 1000;
-            // Slow enough to keep raining until the last frame.
-            const y = -260 + t * (3 + random(`cv${i}`) * 3) + t * t * 0.06;
-            const r = (random(`cr${i}`) - 0.5) * 60 + t * (random(`cs${i}`) - 0.5) * 8;
-            const node =
-              kind === "spark" ? (
-                <Spark size={70} className="text-label" />
-              ) : kind === "rice" || kind === "tuna" ? (
-                <Img src={staticFile(`site/stickers/${kind}.png`)} className="w-[170px]" />
-              ) : (
-                <LoyaltyCard brand={BRANDS[kind]} width={200} />
-              );
-            return (
-              <div key={i} className="absolute" style={{ left: x, top: y, transform: `rotate(${r}deg)` }}>
-                {node}
-              </div>
+    <Band className="bg-lime text-forest" hits={[sortedAt + 3]} ticker={{ words: turn(4), bar: "bg-forest-deep", ink: "text-lime-bright", spark: "text-amber" }}>
+      {/*
+        The haul showers down from the top of the frame and piles up at the bottom. It's drawn
+        first, so it falls behind the logo and the words and never covers them.
+      */}
+      <AbsoluteFill className="overflow-hidden">
+        {CONFETTI.map((kind, i) => {
+          const t = frame - rainAt - i * 4;
+          if (t < 0) return null;
+          const x = 10 + ((i * 67) % 960) + random(`hx${i}`) * 30;
+          const y = dropped(t, 1640 + random(`hf${i}`) * 120);
+          const r = lerp(random(`hr${i}`) * 90 - 45, random(`hs${i}`) * 50 - 25, Math.min(1, t / 24));
+          const node =
+            kind === "spark" ? (
+              <Spark size={70} className="text-label" />
+            ) : isSticker(kind) ? (
+              <Img src={staticFile(STICKERS[kind][0])} style={{ width: STICKERS[kind][1] }} />
+            ) : (
+              <LoyaltyCard brand={BRANDS[kind]} width={240} />
             );
-          })
-        : null}
-      <div className="absolute top-[250px] flex w-full justify-center">
-        <Img
-          src={staticFile("site/brand/app-icon.png")}
-          className="size-[230px] rounded-[54px] shadow-[0_30px_50px_-20px_rgba(13,33,29,0.6)]"
-          style={{ transform: `scale(${icon}) rotate(${(1 - icon) * 20 + wobble(frame, s.voiceAt + 8) * 5}deg)` }}
-        />
+          return (
+            <div key={i} className="absolute" style={{ left: x, top: y, transform: `rotate(${r}deg)` }}>
+              {node}
+            </div>
+          );
+        })}
+      </AbsoluteFill>
+      <div className="absolute top-[520px] flex w-full justify-center">
+        <Logo at={s.voiceAt - 8} revealAt={s.voiceAt - 2} width={880} />
       </div>
-      <div className="absolute top-[540px] flex w-full justify-center">
-        <Img src={staticFile("site/brand/grozara-logo.svg")} className="h-[120px] w-auto" style={{ opacity: Math.min(1, logo * 2), transform: `scale(${lerp(0.6, 1, logo)})` }} />
-      </div>
-      <div className="absolute top-[720px] flex w-full justify-center">
+      <div className="absolute top-[850px] flex w-full justify-center">
         <Verb text={SIGN_OFF} at={sortedAt} className="text-[124px] text-forest" />
       </div>
-      <At x={620} y={1150}>
-        <div
-          className="rounded-[28px] bg-coral px-9 pt-3 pb-5 shadow-[0_22px_34px_-16px_rgba(0,0,0,0.5)]"
-          style={{ opacity: frame < lekkerAt ? 0 : 1, transform: `scale(${lekker}) rotate(${8 + wobble(frame, lekkerAt) * 8}deg)` }}
-        >
-          <p className="font-hand text-[100px] leading-none text-label">Lekker!</p>
-        </div>
-      </At>
       <div
-        className="absolute top-[920px] flex w-full justify-center text-forest"
+        className="absolute top-[1090px] flex w-full justify-center"
+        style={{ opacity: frame < comingAt ? 0 : 1, transform: `scale(${coming}) rotate(${-3 + wobble(frame, comingAt) * 4}deg)` }}
+      >
+        <p className="rounded-full bg-forest px-10 py-4 font-display text-[64px] leading-none tracking-[-0.02em] text-lime-bright">Coming soon</p>
+      </div>
+      <div
+        className="absolute top-[1260px] flex w-full justify-center text-forest"
         style={{ opacity: frame < badgesAt ? 0 : 1, transform: `translateY(${(1 - badges) * 120}px)` }}
       >
-        <StoreBadges height={104} center />
+        <StoreBadges height={110} caption={false} center />
       </div>
     </Band>
   );

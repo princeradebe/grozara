@@ -1,35 +1,407 @@
 {
-  "source": "elevenlabs:eleven_multilingual_v2",
+  "source": "elevenlabs:eleven_v4",
   "lines": [
     {
       "id": "hello",
       "file": "vo/hello.wav",
-      "seconds": 2.506
+      "seconds": 3.679,
+      "words": [
+        {
+          "text": "Meet",
+          "start": 0.077,
+          "end": 0.232
+        },
+        {
+          "text": "Grozara,",
+          "start": 0.309,
+          "end": 0.85
+        },
+        {
+          "text": "your",
+          "start": 1.237,
+          "end": 1.314
+        },
+        {
+          "text": "shopping",
+          "start": 1.411,
+          "end": 1.7
+        },
+        {
+          "text": "list",
+          "start": 1.758,
+          "end": 1.99
+        },
+        {
+          "text": "and",
+          "start": 2.184,
+          "end": 2.435
+        },
+        {
+          "text": "your",
+          "start": 2.473,
+          "end": 2.589
+        },
+        {
+          "text": "loyalty",
+          "start": 2.628,
+          "end": 2.976
+        },
+        {
+          "text": "card",
+          "start": 3.072,
+          "end": 3.285
+        },
+        {
+          "text": "wallet",
+          "start": 3.324,
+          "end": 3.652
+        }
+      ]
     },
     {
       "id": "list",
       "file": "vo/list.wav",
-      "seconds": 2.756
+      "seconds": 4.26,
+      "words": [
+        {
+          "text": "List",
+          "start": 0.116,
+          "end": 0.348
+        },
+        {
+          "text": "it.",
+          "start": 0.425,
+          "end": 0.618
+        },
+        {
+          "text": "Tick,",
+          "start": 0.986,
+          "end": 1.198
+        },
+        {
+          "text": "tick.",
+          "start": 1.333,
+          "end": 1.7
+        },
+        {
+          "text": "Yep,",
+          "start": 2.184,
+          "end": 2.435
+        },
+        {
+          "text": "I",
+          "start": 2.744,
+          "end": 2.783
+        },
+        {
+          "text": "want",
+          "start": 2.821,
+          "end": 3.053
+        },
+        {
+          "text": "this",
+          "start": 3.111,
+          "end": 3.498
+        },
+        {
+          "text": "and",
+          "start": 3.749,
+          "end": 3.903
+        },
+        {
+          "text": "this",
+          "start": 3.961,
+          "end": 4.193
+        }
+      ]
     },
     {
       "id": "snap",
       "file": "vo/snap.wav",
-      "seconds": 6.363
+      "seconds": 5.513,
+      "words": [
+        {
+          "text": "Snap",
+          "start": 0.193,
+          "end": 0.444
+        },
+        {
+          "text": "it.",
+          "start": 0.502,
+          "end": 0.676
+        },
+        {
+          "text": "Click.",
+          "start": 1.043,
+          "end": 1.333
+        },
+        {
+          "text": "It's",
+          "start": 1.739,
+          "end": 1.874
+        },
+        {
+          "text": "a",
+          "start": 1.952,
+          "end": 2.029
+        },
+        {
+          "text": "sticker.",
+          "start": 2.145,
+          "end": 2.705
+        },
+        {
+          "text": "Now",
+          "start": 3.13,
+          "end": 3.285
+        },
+        {
+          "text": "nobody",
+          "start": 3.517,
+          "end": 3.922
+        },
+        {
+          "text": "comes",
+          "start": 3.981,
+          "end": 4.193
+        },
+        {
+          "text": "home",
+          "start": 4.232,
+          "end": 4.406
+        },
+        {
+          "text": "with",
+          "start": 4.425,
+          "end": 4.58
+        },
+        {
+          "text": "tuna",
+          "start": 4.638,
+          "end": 4.928
+        },
+        {
+          "text": "in",
+          "start": 4.986,
+          "end": 5.101
+        },
+        {
+          "text": "oil",
+          "start": 5.198,
+          "end": 5.449
+        }
+      ]
     },
     {
       "id": "share",
       "file": "vo/share.wav",
-      "seconds": 4.261
+      "seconds": 5.326,
+      "words": [
+        {
+          "text": "Share",
+          "start": 0.097,
+          "end": 0.329
+        },
+        {
+          "text": "it.",
+          "start": 0.386,
+          "end": 0.56
+        },
+        {
+          "text": "Thandi",
+          "start": 0.986,
+          "end": 1.295
+        },
+        {
+          "text": "grabs",
+          "start": 1.333,
+          "end": 1.623
+        },
+        {
+          "text": "the",
+          "start": 1.662,
+          "end": 1.739
+        },
+        {
+          "text": "rolls.",
+          "start": 1.797,
+          "end": 2.145
+        },
+        {
+          "text": "Sipho",
+          "start": 2.609,
+          "end": 2.899
+        },
+        {
+          "text": "remembers",
+          "start": 2.937,
+          "end": 3.343
+        },
+        {
+          "text": "the",
+          "start": 3.382,
+          "end": 3.478
+        },
+        {
+          "text": "charcoal",
+          "start": 3.536,
+          "end": 4.058
+        },
+        {
+          "text": "from",
+          "start": 4.483,
+          "end": 4.638
+        },
+        {
+          "text": "the",
+          "start": 4.676,
+          "end": 4.754
+        },
+        {
+          "text": "couch",
+          "start": 4.831,
+          "end": 5.237
+        }
+      ]
     },
     {
       "id": "scan",
       "file": "vo/scan.wav",
-      "seconds": 2.669
+      "seconds": 5.115,
+      "words": [
+        {
+          "text": "Scan",
+          "start": 0.097,
+          "end": 0.367
+        },
+        {
+          "text": "it",
+          "start": 0.425,
+          "end": 0.56
+        },
+        {
+          "text": "80",
+          "start": 1.043,
+          "end": 1.179
+        },
+        {
+          "text": "plus",
+          "start": 1.237,
+          "end": 1.43
+        },
+        {
+          "text": "cards",
+          "start": 1.507,
+          "end": 1.874
+        },
+        {
+          "text": "and",
+          "start": 2.029,
+          "end": 2.184
+        },
+        {
+          "text": "no",
+          "start": 2.28,
+          "end": 2.396
+        },
+        {
+          "text": "more.",
+          "start": 2.493,
+          "end": 2.783
+        },
+        {
+          "text": "Hold",
+          "start": 3.304,
+          "end": 3.498
+        },
+        {
+          "text": "on.",
+          "start": 3.575,
+          "end": 3.749
+        },
+        {
+          "text": "It's",
+          "start": 3.961,
+          "end": 4.116
+        },
+        {
+          "text": "in",
+          "start": 4.155,
+          "end": 4.232
+        },
+        {
+          "text": "here",
+          "start": 4.271,
+          "end": 4.444
+        },
+        {
+          "text": "somewhere",
+          "start": 4.541,
+          "end": 5.024
+        }
+      ]
     },
     {
       "id": "outro",
       "file": "vo/outro.wav",
-      "seconds": 5.994
+      "seconds": 4.294,
+      "words": [
+        {
+          "text": "Shopping",
+          "start": 0.12,
+          "end": 0.56
+        },
+        {
+          "text": "sorted.",
+          "start": 0.92,
+          "end": 1.44
+        },
+        {
+          "text": "Coming",
+          "start": 1.9,
+          "end": 2.14
+        },
+        {
+          "text": "soon",
+          "start": 2.28,
+          "end": 2.54
+        },
+        {
+          "text": "to",
+          "start": 2.58,
+          "end": 2.66
+        },
+        {
+          "text": "the",
+          "start": 2.7,
+          "end": 2.74
+        },
+        {
+          "text": "App",
+          "start": 2.86,
+          "end": 3
+        },
+        {
+          "text": "Store",
+          "start": 3.08,
+          "end": 3.38
+        },
+        {
+          "text": "and",
+          "start": 3.42,
+          "end": 3.52
+        },
+        {
+          "text": "Google",
+          "start": 3.62,
+          "end": 3.86
+        },
+        {
+          "text": "Play",
+          "start": 3.94,
+          "end": 4.22
+        }
+      ]
     }
   ]
 }

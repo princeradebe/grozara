@@ -12,11 +12,16 @@ if (!KEY) {
 const API = "https://api.elevenlabs.io/v1";
 const only = new Set(process.argv.slice(2));
 
+// Log drum first: named ingredients ("pitched log drum", "Rhodes stabs") get real amapiano, where
+// "amapiano pop" with claps and a whistle drifted towards generic advert music. The bed in the video
+// is the take this prompt produced on music_v2_5; each run makes a new take.
 const MUSIC = {
   prompt:
-    "A 30-second instrumental amapiano pop track for a playful, premium mobile app advert. Warm log-drum bass, " +
-    "bright piano chords, shakers, claps and a light whistle hook. Sunny and confident at about 112 BPM. Keep the " +
-    "mid-range open for a voiceover. A short riser at 26 seconds into one big final hit at 28 seconds, then let it ring out.",
+    "A 30-second instrumental amapiano track at 112 BPM, playful and upbeat. The log drum plays bouncy, pitched " +
+    "melodic phrases that answer short jazzy Rhodes piano stabs in a call and response, with the log drum always " +
+    "the loudest element. Shakers, off-beat hi-hats, soft rimshots and quick percussion rolls. Sunny, happy and " +
+    "premium. Keep the vocal mid-range clear for a voiceover. The log drum drops out for one bar at about 25 " +
+    "seconds, then slams back in with one big final log-drum hit at 28 seconds that rings out.",
   seconds: 30,
 };
 
@@ -32,8 +37,6 @@ const SFX = [
   ["ding", "Friendly phone notification ding chime, warm and short", 0.7],
   ["cards", "Playing cards quickly fanned out in a hand, crisp riffle", 0.8],
   ["beep", "Supermarket till barcode scanner beep, single clean beep", 0.5],
-  ["boing", "Playful cartoon boing jump spring", 0.7],
-  ["sparkle", "Magical celebratory sparkle shimmer with light confetti", 1.5],
 ];
 
 async function save(url, body, file) {
