@@ -164,6 +164,41 @@
 .dir-zara-launch { animation: dir-zara-launch 0.95s cubic-bezier(0.55, 0, 0.8, 0.4) forwards; }
 .dir-zara-trail { animation: dir-zara-trail 0.7s ease-out both; }
 
+/* The footer easter egg: a boing per logo tap, then letters that jelly-bounce and a shower of the
+   site that falls, squashes on landing and bounces lower each time. */
+@keyframes dir-logo-boing {
+  0% { transform: none; }
+  30% { transform: scale(1.12, 0.82); }
+  62% { transform: scale(0.94, 1.08); }
+  100% { transform: none; }
+}
+.dir-logo-boing { animation: dir-logo-boing 0.42s cubic-bezier(0.3, 1.4, 0.5, 1); }
+
+@keyframes dir-letter-bounce {
+  12% { transform: translateY(3%) scale(1.12, 0.86); }
+  34% { transform: translateY(-38%) scale(0.9, 1.12); color: var(--party); }
+  54% { transform: translateY(0) scale(1.14, 0.86); }
+  68% { transform: translateY(-12%) scale(0.97, 1.04); }
+  82% { transform: translateY(0) scale(1.05, 0.95); color: var(--party); }
+  100% { transform: none; }
+}
+.dir-letter-bounce { animation: dir-letter-bounce 1.25s cubic-bezier(0.3, 0.8, 0.4, 1) 2 both; }
+
+@keyframes dir-drop-bounce {
+  0% { transform: translate(0, -110vh); opacity: 1; animation-timing-function: cubic-bezier(0.5, 0, 1, 0.6); }
+  34% { transform: translate(calc(var(--drift) * 0.3), 0) rotate(calc(var(--spin) * 0.5)) scale(1.18, 0.8); animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1); }
+  52% { transform: translate(calc(var(--drift) * 0.6), -26vh) rotate(var(--spin)) scale(0.95, 1.06); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5); }
+  68% { transform: translate(calc(var(--drift) * 0.8), 0) rotate(calc(var(--spin) * 1.3)) scale(1.1, 0.88); animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1); }
+  79% { transform: translate(calc(var(--drift) * 0.9), -9vh) rotate(calc(var(--spin) * 1.5)); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5); }
+  88% { transform: translate(var(--drift), 0) rotate(calc(var(--spin) * 1.6)) scale(1.04, 0.96); opacity: 1; }
+  100% { transform: translate(var(--drift), 0) rotate(calc(var(--spin) * 1.6)); opacity: 0; }
+}
+.dir-drop-bounce { animation: dir-drop-bounce 2.8s both; transform-origin: 50% 100%; }
+
+@keyframes dir-letter-glow {
+  40%, 70% { color: var(--party); }
+}
+
 /* The Lime pop FAQ. <details name> makes it one-open-at-a-time; this is the motion: the panel's
    height eases open, the answer rises in out of a blur, and the rest of the list steps back.
    Browsers without ::details-content still get everything but the height easing. */
@@ -206,7 +241,12 @@
   }
   .dir-scan,
   .dir-zara-idle,
-  .group:hover .dir-zara-handle {
+  .group:hover .dir-zara-handle,
+  .dir-logo-boing {
     animation: none;
+  }
+  /* The party still happens, as a colour change rather than motion. */
+  .dir-letter-bounce {
+    animation: dir-letter-glow 1.4s ease-in-out both;
   }
 }

@@ -1,4 +1,3 @@
-import Image from "next/image";
 
 import { Icon } from "@/components/mocks/Icon";
 import { BRANDS, BuyStamp, LoyaltyCard, StickerCard } from "@/components/mocks/parts";
@@ -7,6 +6,7 @@ import { HomeScreen, ListScreen, WalletScreen } from "@/components/mocks/screens
 import { StoreBadges } from "@/components/site/StoreBadges";
 import { FAQS, FOOTER_COLUMNS, LEGAL, SIGN_OFF, TAGLINE } from "@/content/site";
 
+import { EggLogo, PartyWordmark } from "./FooterEgg";
 import { TickableSticker } from "./Interactive";
 import { Kicker, tilt, Verb } from "./ui";
 
@@ -122,7 +122,7 @@ export function Footer() {
     <footer className="relative flex flex-col overflow-clip bg-forest-deep text-mist lg:min-h-svh">
       <div className="mx-auto grid w-full max-w-7xl flex-1 gap-14 px-6 pt-20 lg:grid-cols-[1.2fr_1fr] lg:gap-20 lg:px-12 lg:pt-28">
         <div>
-          <Image src="/brand/grozara-logo-white.svg" alt="Grozara" width={286} height={64} className="h-10 w-auto" />
+          <EggLogo />
           <p className="mt-8 max-w-xl font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.95] tracking-[-0.03em]">{TAGLINE}</p>
           <StoreBadges height={52} apple="white" className="mt-10 text-mist" />
         </div>
@@ -162,11 +162,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div aria-hidden className="dir-wordmark">
-        <p className="-mb-[0.2em] text-center font-display text-[25vw] leading-[0.9] tracking-[-0.055em] whitespace-nowrap text-lime">
-          Grozara
-        </p>
-      </div>
+      <PartyWordmark />
     </footer>
   );
 }
