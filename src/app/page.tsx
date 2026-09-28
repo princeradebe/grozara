@@ -1,6 +1,7 @@
 import type { Viewport } from "next";
 
 import { Direction5 } from "@/components/directions/Direction5";
+import { ScrollTop } from "@/components/directions/d5/ScrollTop";
 
 import "./directions/directions.css";
 
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <main>
       <Direction5 />
+      <ScrollTop />
     </main>
   );
 }
