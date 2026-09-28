@@ -9,8 +9,6 @@
     "ding": "sfx/ding.wav",
     "cards": "sfx/cards.wav",
     "beep": "sfx/beep.wav",
-    "boing": "sfx/boing.wav",
-    "sparkle": "sfx/sparkle.wav",
     "pop": "sfx/pop.wav",
     "tick": "sfx/tick.wav"
   }
