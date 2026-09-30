@@ -40,7 +40,7 @@ function Hero() {
     <section id="top" className="relative overflow-clip bg-lime pt-[68px] text-forest lg:min-h-svh">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_80%_40%,rgba(165,224,99,0.9),transparent_70%)]" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-4 px-6 pt-14 pb-6 lg:grid-cols-[1.1fr_1fr] lg:px-12 lg:pt-14 lg:pb-10">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-4 px-6 pt-14 pb-6 lg:grid-cols-[1.1fr_1fr] lg:px-12 lg:pt-14 lg:pb-10">
         <div className="relative z-10">
           <h1 className="font-display text-[clamp(3.5rem,8.6vw,7.4rem)] leading-[0.86] tracking-[-0.035em]">
             {VERBS.map(([word, icon, chip], i) => (
@@ -60,7 +60,7 @@ function Hero() {
           </div>
         </div>
 
-        <div aria-hidden className="relative mx-auto h-[680px] w-[540px] [zoom:0.64] sm:[zoom:1]">
+        <div aria-hidden className="relative mx-auto h-[680px] w-[540px] [zoom:0.57] min-[380px]:[zoom:0.64] sm:[zoom:1]">
           <div className="dir-rise dir-delay-3 absolute top-12 right-0 rotate-[9deg]">
             <div className="dir-float-side">
               <PhoneFrame scale={0.62}>
