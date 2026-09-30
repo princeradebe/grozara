@@ -35,7 +35,10 @@ export function PhoneFrame({
           className={`relative h-full w-full overflow-hidden rounded-[57px] ${tone === "dark" ? "bg-forest-deep text-label" : "bg-mist text-forest"}`}
         >
           <StatusBar tone={tone} />
-          <div className="absolute top-[11px] left-1/2 h-[34px] w-[122px] -translate-x-1/2 rounded-full bg-black" />
+          {/* The Dynamic Island sits above every screen, like the real cut-out, lens on the right. */}
+          <div className="absolute top-[11px] left-1/2 z-30 flex h-[35px] w-[122px] -translate-x-1/2 items-center justify-end rounded-full bg-black pr-[12px]">
+            <span className="size-[11px] rounded-full bg-[radial-gradient(circle_at_35%_35%,#3b4a66,#0d1119_62%)]" />
+          </div>
           {children}
           <div
             className={`absolute bottom-[8px] left-1/2 h-[5px] w-[134px] -translate-x-1/2 rounded-full ${tone === "dark" ? "bg-white/80" : "bg-forest/85"}`}

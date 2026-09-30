@@ -32,7 +32,7 @@ const TILES: { tone: string; tilt: string; art: ReactNode; play?: string }[] = [
 
 export function Extras() {
   return (
-    <section className="dir-paper relative overflow-clip text-forest">
+    <section id="extras" className="dir-paper relative scroll-mt-20 overflow-clip text-forest">
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-20 lg:px-12 lg:pt-20 lg:pb-28">
         <div className="dir-reveal flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
           <div>
@@ -79,7 +79,7 @@ const NUMERAL_INK = ["text-forest", "text-coral", "text-lime"];
 
 export function HowItWorks() {
   return (
-    <section className="relative overflow-clip bg-blush text-forest">
+    <section id="how-it-works" className="relative scroll-mt-20 overflow-clip bg-blush text-forest">
       <div className="mx-auto max-w-7xl px-6 pt-16 pb-20 lg:px-12 lg:pt-20 lg:pb-28">
         <div className="dir-reveal">
           <Kicker className="bg-forest text-blush">How it works</Kicker>
