@@ -8,11 +8,11 @@ import { Faq, Footer, GetIt } from "./d5/End";
 import { Header } from "./d5/Header";
 import { Extras, HowItWorks } from "./d5/More";
 
-const VERBS: [string, IconName, string][] = [
-  ["List it.", "list", "bg-forest text-lime-bright"],
-  ["Snap it.", "camera", "bg-coral text-white"],
-  ["Share it.", "userGroup", "bg-blush text-forest"],
-  ["Scan it.", "barcode", "bg-amber text-forest"],
+const VERBS: [string, IconName, string, string][] = [
+  ["List it.", "list", "bg-forest text-lime-bright", "dir-verb-list"],
+  ["Snap it.", "camera", "bg-coral text-white", "dir-verb-snap"],
+  ["Share it.", "userGroup", "bg-blush text-forest", "dir-verb-share"],
+  ["Scan it.", "barcode", "bg-amber text-forest", "dir-verb-scan"],
 ];
 
 /** 5 · Lime pop: loud colour bands, huge verbs and tilted phones. */
@@ -43,11 +43,11 @@ function Hero() {
       <div className="relative mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] items-center gap-4 px-6 pt-14 pb-6 lg:grid-cols-[1.1fr_1fr] lg:px-12 lg:pt-14 lg:pb-10">
         <div className="relative z-10">
           <h1 className="font-display text-[clamp(3.5rem,8.6vw,7.4rem)] leading-[0.86] tracking-[-0.035em]">
-            {VERBS.map(([word, icon, chip], i) => (
+            {VERBS.map(([word, icon, chip, anim], i) => (
               <span key={word} className={`dir-rise flex items-center gap-[0.22em] dir-delay-${i + 1}`}>
                 {word}
-                <span aria-hidden className={`grid size-[0.62em] shrink-0 place-items-center rounded-[0.18em] ${chip}`}>
-                  <Icon name={icon} className="size-[0.36em]" />
+                <span aria-hidden className={`dir-verb-chip grid size-[0.62em] shrink-0 place-items-center rounded-[0.18em] ${chip}`}>
+                  <Icon name={icon} className={`size-[0.36em] ${anim}`} />
                 </span>
               </span>
             ))}
