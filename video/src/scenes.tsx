@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 import { AbsoluteFill, Img, random, staticFile, useCurrentFrame } from "remotion";
 
 import { Icon } from "@/components/mocks/Icon";
-import { AvatarStack, BRANDS, BuyStamp, LiveDot, LiveToast, LoyaltyCard, PEOPLE, StickerCard } from "@/components/mocks/parts";
+import { AvatarStack, BRANDS, BuyStamp, LiveDot, LiveToast, LoyaltyCard, PEOPLE, type Person, StickerCard } from "@/components/mocks/parts";
 import { PhoneFrame } from "@/components/mocks/PhoneFrame";
-import { CardDetailScreen, ListScreen, SharedListScreen } from "@/components/mocks/screens";
+import { CardDetailScreen, LIST_ROWS, type ListRow, ListScreen, SHARED_ROWS, type SharedRow, SharedListScreen } from "@/components/mocks/screens";
 import { StoreBadges } from "@/components/site/StoreBadges";
 import { SIGN_OFF, TICKER } from "@/content/site";
 
@@ -126,16 +126,20 @@ export function Hello({ s }: { s: Scene }) {
 
 // ——— 2 · List it ——————————————————————————————————————————————————————————————
 
-/** Two items from the list mock that aren't ticked yet. */
-const PICKS = ["Boerewors", "Rooibos tea"];
+/** The three items the voice lists: what it says, and the row in the list mock it means. */
+const LISTED: [said: string, row: string][] = [
+  ["Milk", "Milk"],
+  ["Bread", "Brown bread"],
+  ["Boerewors", "Boerewors"],
+];
 
 export function List({ s }: { s: Scene }) {
   const frame = useCurrentFrame();
   const phone = pop(frame, s.voiceAt, 13);
-  const tickAt = cue(s, CUES.list.tick);
-  const tickAgainAt = cue(s, CUES.list.tickAgain);
-  const tick = pop(frame, tickAt, 8);
-  const picks = [cue(s, CUES.list.pick), cue(s, CUES.list.pickAgain)];
+  const named = [cue(s, CUES.list.milk), cue(s, CUES.list.bread), cue(s, CUES.list.boerewors)];
+  const ticked = [cue(s, CUES.list.tick), cue(s, CUES.list.tickAgain), cue(s, CUES.list.tickLast)];
+  // The list on the phone starts unticked and follows the voice: one row per "tick".
+  const rows = LIST_ROWS.map(([name, size]): ListRow => [name, size, LISTED.some(([, row], i) => row === name && frame >= ticked[i])]);
   return (
     <Band
       className="bg-forest text-mist"
@@ -149,35 +153,32 @@ export function List({ s }: { s: Scene }) {
       <At x={470} y={500}>
         <div style={{ transform: `translateX(${(1 - phone) * 760}px) rotate(${5 + (1 - phone) * 14}deg)` }}>
           <PhoneFrame scale={0.9}>
-            <ListScreen />
+            <ListScreen rows={rows} />
           </PhoneFrame>
         </div>
       </At>
-      <At x={120} y={640}>
-        <div
-          className="grid place-items-center rounded-full bg-lime text-forest shadow-[0_24px_40px_-16px_rgba(0,0,0,0.6)]"
-          style={{
-            width: 230,
-            height: 230,
-            transform: `scale(${tick * (1 + wobble(frame, tickAgainAt) * 0.12)}) rotate(${(1 - tick) * -40 + (wobble(frame, tickAt) + wobble(frame, tickAgainAt)) * 6}deg)`,
-          }}
-        >
-          <Tick size={230} />
-        </div>
-      </At>
-      {/* "Yep, I want this… and this": each item lands ticked on its word. */}
-      {PICKS.map((item, i) => {
-        const t = slam(frame, picks[i]);
+      {/* "Milk, bread, boerewors": each lands as it's named. "Tick, tick, tick": each gets its tick. */}
+      {LISTED.map(([said], i) => {
+        const land = slam(frame, named[i]);
+        const tick = pop(frame, ticked[i], 8);
+        const done = frame >= ticked[i];
         return (
-          <At key={item} x={60} y={1000 + i * 150}>
+          <At key={said} x={60} y={760 + i * 170}>
             <div
               className="flex items-center gap-5 rounded-full bg-label py-4 pr-11 pl-4 text-[46px] font-semibold text-forest shadow-[0_24px_40px_-18px_rgba(0,0,0,0.7)]"
-              style={{ opacity: frame < picks[i] ? 0 : 1, transform: `translateX(${(1 - t) * -700}px) rotate(${i ? 2 : -3}deg)` }}
+              style={{
+                opacity: frame < named[i] ? 0 : 1,
+                transform: `translateX(${(1 - land) * -700}px) rotate(${[-3, 2, -2][i] + wobble(frame, ticked[i]) * 4}deg)`,
+              }}
             >
-              <span className="grid size-[70px] place-items-center rounded-full bg-lime text-forest">
-                <Tick size={70} />
+              <span className={`grid size-[70px] place-items-center rounded-full ${done ? "bg-lime text-forest" : "border-[5px] border-forest/25"}`}>
+                {done ? (
+                  <span className="grid place-items-center" style={{ transform: `scale(${tick})` }}>
+                    <Tick size={70} />
+                  </span>
+                ) : null}
               </span>
-              {item}
+              {said}
             </div>
           </At>
         );
@@ -192,6 +193,8 @@ export function List({ s }: { s: Scene }) {
 export function Snap({ s }: { s: Scene }) {
   const frame = useCurrentFrame();
   const flashAt = cue(s, CUES.snap.flash);
+  const modeAt = cue(s, CUES.snap.mode);
+  const mode = pop(frame, modeAt, 10);
   const liftAt = cue(s, CUES.snap.lift);
   const stampAt = liftAt + STAMP_DELAY;
   const noteAt = cue(s, CUES.snap.note);
@@ -211,6 +214,15 @@ export function Snap({ s }: { s: Scene }) {
       <div className="absolute top-[210px] right-[64px]">
         <Verb text="Snap it." at={s.voiceAt - 2} className="text-[230px] text-label" style={{ textShadow: "0.045em 0.045em 0 #183631" }} />
       </div>
+
+      <At x={64} y={426}>
+        <p
+          className="rounded-full bg-forest px-8 py-4 font-display text-[48px] leading-none tracking-[-0.01em] text-label shadow-[0_22px_34px_-16px_rgba(0,0,0,0.5)]"
+          style={{ opacity: frame < modeAt ? 0 : 1, transform: `scale(${mode}) rotate(${-4 + wobble(frame, modeAt) * 4}deg)`, transformOrigin: "20% 60%" }}
+        >
+          Boyfriend Mode
+        </p>
+      </At>
 
       {/* The photo on the counter, then the rice lifting out of it as a sticker. */}
       <At x={90} y={560}>
@@ -278,15 +290,29 @@ export function Snap({ s }: { s: Scene }) {
 
 // ——— 4 · Share it —————————————————————————————————————————————————————————————
 
+/** The narrator: the third person on the list. */
+const ME: Person = { ...PEOPLE.lerato, name: "You" };
+const DRINKS: SharedRow = { name: "Drinks", size: "", done: false, added: ME };
+
 export function Share({ s }: { s: Scene }) {
   const frame = useCurrentFrame();
   const phone = pop(frame, s.voiceAt, 13);
-  const toasts: [keyof typeof PEOPLE, string, string, number][] = [
-    ["thandi", "ticked off", "Rolls", cue(s, CUES.share.thandi)],
-    ["sipho", "added", "Charcoal", cue(s, CUES.share.sipho)],
-  ];
   const liveAt = cue(s, CUES.share.live);
   const live = pop(frame, liveAt, 9);
+  const at = { thandi: cue(s, CUES.share.thandi), sipho: cue(s, CUES.share.sipho), me: cue(s, CUES.share.me) };
+  const toasts: [Person, string, string, number][] = [
+    [PEOPLE.thandi, "ticked off", "Rolls", at.thandi],
+    [PEOPLE.sipho, "added", "Charcoal", at.sipho],
+    [ME, "added", "Drinks", at.me],
+  ];
+  // The list on the phone follows along: the rolls get ticked, then the charcoal and the drinks join it.
+  const rows = SHARED_ROWS.flatMap((row): SharedRow[] => {
+    if (row.name === "Rolls") return [frame >= at.thandi ? row : { name: row.name, size: row.size, done: false }];
+    if (row.name === "Charcoal") return [...(frame >= at.sipho ? [row] : []), ...(frame >= at.me ? [DRINKS] : [])];
+    // "Drinks" covers it.
+    if (row.name === "Cream soda") return [];
+    return [row];
+  });
   return (
     <Band
       className="bg-amber text-forest"
@@ -309,21 +335,11 @@ export function Share({ s }: { s: Scene }) {
       <At x={500} y={500}>
         <div style={{ transform: `translateY(${(1 - phone) * 900}px) rotate(${-4 + (1 - phone) * -10}deg)` }}>
           <PhoneFrame scale={0.9}>
-            <SharedListScreen />
+            <SharedListScreen rows={rows} />
           </PhoneFrame>
         </div>
       </At>
-      {toasts.map(([who, action, item, at], i) => {
-        const t = pop(frame, at, 10);
-        return (
-          <At key={who} x={40} y={620 + i * 190}>
-            <div style={{ opacity: frame < at ? 0 : 1, transform: `scale(${1.45 * t}) rotate(${i ? 3 : -3}deg)`, transformOrigin: "0 50%" }}>
-              <LiveToast person={PEOPLE[who]} action={action} item={item} />
-            </div>
-          </At>
-        );
-      })}
-      <At x={60} y={1040}>
+      <At x={60} y={590}>
         <div
           className="flex items-center gap-6 rounded-full bg-white py-4 pr-10 pl-4 shadow-[0_26px_40px_-20px_rgba(24,54,49,0.7)]"
           style={{ opacity: frame < liveAt ? 0 : 1, transform: `scale(${live}) rotate(-5deg)`, transformOrigin: "0 50%" }}
@@ -334,6 +350,16 @@ export function Share({ s }: { s: Scene }) {
           </span>
         </div>
       </At>
+      {toasts.map(([person, action, item, shownAt], i) => {
+        const t = pop(frame, shownAt, 10);
+        return (
+          <At key={item} x={40} y={810 + i * 165}>
+            <div style={{ opacity: frame < shownAt ? 0 : 1, transform: `scale(${1.45 * t}) rotate(${[-3, 3, -2][i]}deg)`, transformOrigin: "0 50%" }}>
+              <LiveToast person={person} action={action} item={item} />
+            </div>
+          </At>
+        );
+      })}
       <Caption s={s} lead={2} />
     </Band>
   );

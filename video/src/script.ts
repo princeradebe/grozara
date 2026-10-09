@@ -9,23 +9,23 @@ export const LINES: readonly { id: string; text: string; say?: string }[] = [
   },
   {
     id: "list",
-    text: "List it. Tick, tick… yep, I want this and this.",
-    say: "[light, playful] List it. Tick, tick… [pleased, decisive] yep, I want this… and this.",
+    text: "List it. Milk, bread, boerewors. Tick, tick, tick.",
+    say: "[light, playful] List it. Milk, bread, boerewors. [satisfied, rhythmic] Tick, tick, tick.",
   },
   {
     id: "snap",
-    text: "Snap it. Click… it's a sticker! Now nobody comes home with tuna in oil.",
-    say: "[upbeat] Snap it. Click… [delighted] it's a sticker! [cheeky] Now nobody comes home with tuna in oil.",
+    text: "Snap it. Boyfriend Mode turns your photo into a sticker. No more tuna in oil.",
+    say: "[upbeat] Snap it. Boyfriend Mode turns your photo into a sticker. [cheeky] No more tuna in oil.",
   },
   {
     id: "share",
-    text: "Share it. Thandi grabs the rolls, Sipho remembers the charcoal… from the couch.",
-    say: "[upbeat] Share it. Thandi grabs the rolls, Sipho remembers the charcoal… [dry, deadpan] from the couch.",
+    text: "Share it. Thandi grabs the rolls, Sipho remembers the charcoal… and I, the drinks.",
+    say: "[upbeat] Share it. Thandi grabs the rolls, Sipho remembers the charcoal… [playful, pleased with herself] and I, the drinks.",
   },
   {
     id: "scan",
-    text: "Scan it. 80+ cards, and no more “hold on, it's in here somewhere…”",
-    say: "[confident] Scan it. Eighty-plus cards, and no more… [flustered, searching voice] hold on, it's in here somewhere…",
+    text: "Scan it. Every loyalty card, on your phone. No more digging at the till.",
+    say: "[confident] Scan it. Every loyalty card, on your phone. [relieved] No more digging at the till.",
   },
   {
     id: "outro",
