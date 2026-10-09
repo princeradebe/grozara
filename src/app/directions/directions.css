@@ -124,6 +124,38 @@
 }
 .dir-scan { animation: dir-scan 1.4s ease-in-out infinite; }
 
+/* The hero verb chips: on hover the glyph plays one pass inside its tile — items ticked
+   off, a shutter click, a sway, a swipe through the scanner. Nothing moves unhovered. */
+@keyframes dir-verb-list {
+  0% { transform: none; }
+  22% { transform: translateY(7%) scale(1.06); }
+  44% { transform: none; }
+  66% { transform: translateY(7%) scale(1.06); }
+  88%, 100% { transform: none; }
+}
+@keyframes dir-verb-snap {
+  0% { transform: none; }
+  30% { transform: scale(0.78); }
+  62% { transform: scale(1.1); }
+  100% { transform: none; }
+}
+@keyframes dir-verb-share {
+  0% { transform: none; }
+  30% { transform: rotate(-7deg); }
+  65% { transform: rotate(5deg); }
+  100% { transform: none; }
+}
+@keyframes dir-verb-scan {
+  0% { transform: none; }
+  40% { transform: translateX(10%); }
+  60% { transform: translateX(10%); }
+  100% { transform: none; }
+}
+.dir-verb-chip:hover .dir-verb-list { animation: dir-verb-list 0.9s ease-in-out; }
+.dir-verb-chip:hover .dir-verb-snap { animation: dir-verb-snap 0.7s ease-in-out; }
+.dir-verb-chip:hover .dir-verb-share { animation: dir-verb-share 1s ease-in-out; }
+.dir-verb-chip:hover .dir-verb-scan { animation: dir-verb-scan 0.9s ease-in-out; }
+
 /* Back to top (Lime pop). The ring fills with a scroll timeline; without one it stays full. */
 .dir-progress {
   stroke-dasharray: 1;
@@ -232,6 +264,10 @@
     transition: none;
   }
   .dir-scan,
+  .dir-verb-chip:hover .dir-verb-list,
+  .dir-verb-chip:hover .dir-verb-snap,
+  .dir-verb-chip:hover .dir-verb-share,
+  .dir-verb-chip:hover .dir-verb-scan,
   .dir-zara-idle,
   .group:hover .dir-zara-handle {
     animation: none;
